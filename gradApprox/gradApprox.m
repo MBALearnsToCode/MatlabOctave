@@ -1,4 +1,4 @@
-function f = approxGrad(func, Arr, epsilon = 1e-6)
+function f = gradApprox(func, Arr, epsilon = 1e-6)
 
    f = zeros(size(Arr));
    for (e = 1 : numel(Arr))
