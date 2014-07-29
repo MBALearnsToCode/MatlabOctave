@@ -1,6 +1,7 @@
 function f = costFuncAvgCalcs...
-   (hypoArr, targetArr, costFuncType, ...
-   returnGrad = true, casesDim = 1)
+   (hypoArr, targetArr, ...
+   targetArr_isClassIndcsColVec_ofNumClasses = 0, ...
+   costFuncType, returnGrad = true, casesDim = 1)
 
    switch (costFuncType)
 
@@ -14,15 +15,23 @@ function f = costFuncAvgCalcs...
          funcCostAvg = @costFuncAvg_crossEntropy_softmax;
           
    endswitch
-
+   
+   if (targetArr_isClassIndcsColVec_ofNumClasses)
+      targetArr_toUse = convertClassIndcsColVec_toRowMat...
+         (targetArr, ...
+         targetArr_isClassIndcsColVec_ofNumClasses);
+   else
+      targetArr_toUse = targetArr;
+   end;
+   
    if (returnGrad)
       calcs = funcCostAvg...
-         (hypoArr, targetArr, returnGrad, casesDim);
+         (hypoArr, targetArr_toUse, returnGrad, casesDim);
       f.val = calcs.val;
       f.grad = calcs.grad;
    else
       f.val = funcCostAvg...
-         (hypoArr, targetArr, returnGrad, casesDim).val;
+         (hypoArr, targetArr_toUse, returnGrad, casesDim).val;
    endif
 
 end

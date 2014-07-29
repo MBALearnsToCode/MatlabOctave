@@ -7,7 +7,7 @@ numSuccesses = 0;
 
 for demo = 1:numDemos
 
-fprintf('\rTest Run no.: %i', demo);
+fprintf('\rTest #%i', demo);
 
 % constants
 % ---------
@@ -62,7 +62,7 @@ if (iters <= maxNumIters)
   % fprintf('Learned Weights =\n');
   % Theta
 else
-   fprintf('Learning FAILURE in %i iterations :(\n', maxNumIters);
+   fprintf('   Learning FAILURE in %i iterations :(\n', maxNumIters);
 endif
 
 

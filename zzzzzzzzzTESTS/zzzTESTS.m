@@ -45,9 +45,9 @@ fprintf('\n');
 
 % NG Machine Learning: Ex01
 % -------------------------
-fprintf('TESTING: NG Machine Learning: Ex01\n');
+fprintf('TESTING: NG Machine Learning: Ex01 (LINEAR REGRESSION)\n');
 if input('run? (1/0) = ')
-   cd 'D:\Users\vinhluong\Dropbox\Knowledge\Computing, Programming\Octave\lib\zzzDEMOS\NG - Machine Learning\ex01'
+   cd 'D:\Cloud\Box Sync\GitHub\MBALearnsToCode\MatlabOctave\zzzzzzzzzDEMOS\NG - Machine Learning\ex01'
    zzzTest_Ng_ML_ex01;
 endif
 fprintf('\n');
@@ -57,7 +57,7 @@ fprintf('\n');
 % -------------------------
 fprintf('TESTING: NG Machine Learning: Ex02\n');
 if input('run? (1/0) = ')
-   cd 'D:\Users\vinhluong\Dropbox\Knowledge\Computing, Programming\Octave\lib\zzzDEMOS\NG - Machine Learning\ex02'
+   cd 'D:\Cloud\Box Sync\GitHub\MBALearnsToCode\MatlabOctave\zzzzzzzzzDEMOS\NG - Machine Learning\ex02'
    zzzTest_Ng_ML_ex02;
 endif
 fprintf('\n');
@@ -67,7 +67,7 @@ fprintf('\n');
 % -------------------------
 fprintf('TESTING: NG Machine Learning: Ex03\n');
 if input('run? (1/0) = ')
-   cd 'D:\Users\vinhluong\Dropbox\Knowledge\Computing, Programming\Octave\lib\zzzDEMOS\NG - Machine Learning\ex03'
+   cd 'D:\Cloud\Box Sync\GitHub\MBALearnsToCode\MatlabOctave\zzzzzzzzzDEMOS\NG - Machine Learning\ex03'
    zzzTest_Ng_ML_ex03;
 endif
 fprintf('\n');
@@ -77,7 +77,7 @@ fprintf('\n');
 % -------------------------
 fprintf('TESTING: NG Machine Learning: Ex04\n');
 if input('run? (1/0) = ')
-   cd 'D:\Users\vinhluong\Dropbox\Knowledge\Computing, Programming\Octave\lib\zzzDEMOS\NG - Machine Learning\ex04'
+   cd 'D:\Cloud\Box Sync\GitHub\MBALearnsToCode\MatlabOctave\zzzzzzzzzDEMOS\NG - Machine Learning\ex04'
    zzzTest_Ng_ML_ex04;
 endif
 fprintf('\n');
@@ -87,7 +87,7 @@ fprintf('\n');
 % -------------------------
 fprintf('TESTING: NG Machine Learning: Ex05\n');
 if input('run? (1/0) = ')
-   cd 'D:\Users\vinhluong\Dropbox\Knowledge\Computing, Programming\Octave\lib\zzzDEMOS\NG - Machine Learning\ex05'
+   cd 'D:\Cloud\Box Sync\GitHub\MBALearnsToCode\MatlabOctave\zzzzzzzzzDEMOS\NG - Machine Learning\ex05'
    zzzTest_Ng_ML_ex05;
 endif
 fprintf('\n');
@@ -97,7 +97,7 @@ fprintf('\n');
 % -------------------------
 fprintf('TESTING: NG Machine Learning: Ex06\n');
 if input('run? (1/0) = ')
-   cd 'D:\Users\vinhluong\Dropbox\Knowledge\Computing, Programming\Octave\lib\zzzDEMOS\NG - Machine Learning\ex06'
+   cd 'D:\Cloud\Box Sync\GitHub\MBALearnsToCode\MatlabOctave\zzzzzzzzzDEMOS\NG - Machine Learning\ex06'
    zzzTest_Ng_ML_ex06;
 endif
 fprintf('\n');
@@ -107,7 +107,7 @@ fprintf('\n');
 % ---------------------------------------
 fprintf('TESTING: NG Machine Learning: Ex06: Spam Classif\n');
 if input('run? (1/0) = ')
-   cd 'D:\Users\vinhluong\Dropbox\Knowledge\Computing, Programming\Octave\lib\zzzDEMOS\NG - Machine Learning\ex06'
+   cd 'D:\Cloud\Box Sync\GitHub\MBALearnsToCode\MatlabOctave\zzzzzzzzzDEMOS\NG - Machine Learning\ex06'
    zzzTest_Ng_ML_ex06_spam;
 endif
 fprintf('\n');

@@ -1,6 +1,5 @@
 function pausePressKey
 
-   fprintf('\nProgram PAUSED - press any key to continue...\n');   
-   pause;
+   input('Program PAUSED - press ENTER to continue...');
 
 end

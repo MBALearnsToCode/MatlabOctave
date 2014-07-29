@@ -13,7 +13,7 @@ function f = zzzTest_ffNN_vs_linReg_wRegul(numRuns = 1)
 
    for (r = 1 : numRuns)
 
-      fprintf('\rTest Run no. : %i', r);
+      fprintf('\rTest #%i', r);
 
       regulParam = randElem(const_regulParams_10);
 
@@ -43,18 +43,19 @@ function f = zzzTest_ffNN_vs_linReg_wRegul(numRuns = 1)
       err = H - Y;
       linRegModel{r}.costAvg = ...
          sum(sum((err .^ 2))) / (2 * m) ...
-         + regulParam * sum(sum(W .^ 2)) / (2 * m);
+         + regulParam * sum(sum(W .^ 2)) / 2;
       linRegModel{r}.activGrad = err / m;
       linRegModel{r}.biasWeightGrad = bX' * err / m ...
-         + regulParam * [zeros([aB nO]); W] / m;
+         + regulParam * [zeros([aB nO]); W];
 
       % NEURAL NETWORK
       % --------------
       ffNN = ffNN_new(nI, {[(nI + aB) nO]}, ...
-         {funcLinear_inputRowMat_n_biasWeightMat(aB)}, ...
+         {funcLinear_inputRowMat_n_biasWeightMat(aB)}, {}, ...
          false);       
-      ffNN.params{2} = bW;
-      ffNN = ffNN_fProp_bProp(X, ffNN, Y, regulParam);
+      ffNN.params{2} = bW;      
+      ffNN = ffNN_fProp_bProp(ffNN, X, Y, 0, ...
+         {{'L2'} regulParam});
 
       ffNNModel{r}.hypoOutput = ffNN.hypoOutput;
       ffNNModel{r}.costAvg = ffNN.costAvg_wRegul;
@@ -85,6 +86,6 @@ function f = zzzTest_ffNN_vs_linReg_wRegul(numRuns = 1)
    f.ffNNModel = ffNNModel;
    f.fails = fails;
 
-   fprintf('\n\n%i successes out of %i tests\n\n', succs, numRuns);
+   fprintf('\n\n%i Successes / %i Tests\n\n', succs, numRuns);
 
 end

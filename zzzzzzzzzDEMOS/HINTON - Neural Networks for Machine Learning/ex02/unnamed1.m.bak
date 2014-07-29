@@ -1,0 +1,15 @@
+function f = evalBinClassifPred(predArr, targetArr)
+
+   target_colVec = targetArr(:);
+   pred_colVec = predArr(:);
+   
+   f.numElems = numElems = length(target_colVec);
+   f.numPos = numPos = sum(target_colVec);
+   f.numNeg = numNeg = numElems - numPos;
+   f.numTPos = numTPos = sum(target_colVec & pred_colVec);
+   f.numTNeg = numTNeg = sum((~target_colVec) & (~pred_colVec));
+   f.numFPos = numFPos = sum((~target_colVec) & pred_colVec);
+   f.numFNeg = numFNeg = sum(target_colVec & (~pred_colVec));
+   f.accuracy = (numTPos + numTNeg) / numElems;
+   f.precision = numTPos / numTargetPos;
+   f.recall = num

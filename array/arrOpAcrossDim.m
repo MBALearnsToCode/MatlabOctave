@@ -8,9 +8,11 @@ function f = arrOpAcrossDim(Arr, op, op_vec = [], opDim = 1)
    if (opDim > 1)
       perm_vec(1) = opDim;
       perm_vec(opDim) = 1;
-   endif
-      
-   Arr_perm = arrPerm(Arr, perm_vec);   
+      Arr_perm = arrPerm(Arr, perm_vec);
+   else
+      Arr_perm = Arr;
+   endif      
+
    dimSzs_perm = arrDimSizes(Arr_perm);
    
    switch (op)
@@ -25,27 +27,33 @@ function f = arrOpAcrossDim(Arr, op, op_vec = [], opDim = 1)
             (randperm(dimSzs_perm(1)),:)(:), ...
             dimSzs_perm);
 
-      case ('split')        
-         reshape_vec = dimSzs_perm;
-         reshape_vec(1) = op_vec(1);
-         reshape_vec(numDims + 1) = ...
-            floor(dimSzs_perm(1) / op_vec(1));
-         dimSzs_perm(1) = ...
-            reshape_vec(numDims + 1) * reshape_vec(1);
-         Arr_perm = reshape(Arr_perm...
-            (1 : dimSzs_perm(1),:)(:), dimSzs_perm);
-         splitPerm_vec = [(2 : numDims) 1];
-         Arr_permForSplit = ...
-            arrPerm(Arr_perm, splitPerm_vec);
-         splitPerm_vec(numDims + 1) = numDims + 1;         
-         reshape_vec_reorderedForSplit = ...
-            reshape_vec(splitPerm_vec);
-         f_permAfterSplit = ...
-            reshape(Arr_permForSplit(:), ...
-            reshape_vec_reorderedForSplit); 
-         f_perm = ...
-            arrIPerm(f_permAfterSplit, splitPerm_vec);
-         perm_vec(numDims + 1) = numDims + 1;
+      case ('split')
+      
+         if (op_vec(1) == 0)
+            f = Arr;
+            return;
+         else
+            reshape_vec = dimSzs_perm;
+            reshape_vec(1) = op_vec(1);
+            reshape_vec(numDims + 1) = ...
+               floor(dimSzs_perm(1) / op_vec(1));
+            dimSzs_perm(1) = ...
+               reshape_vec(numDims + 1) * reshape_vec(1);
+            Arr_perm = reshape(Arr_perm...
+               (1 : dimSzs_perm(1),:)(:), dimSzs_perm);
+            splitPerm_vec = [(2 : numDims) 1];
+            Arr_permForSplit = ...
+               arrPerm(Arr_perm, splitPerm_vec);
+            splitPerm_vec(numDims + 1) = numDims + 1;         
+            reshape_vec_reorderedForSplit = ...
+               reshape_vec(splitPerm_vec);
+            f_permAfterSplit = ...
+               reshape(Arr_permForSplit(:), ...
+               reshape_vec_reorderedForSplit); 
+            f_perm = ...
+               arrIPerm(f_permAfterSplit, splitPerm_vec);
+            perm_vec(numDims + 1) = numDims + 1;
+         endif
 
    endswitch
 

@@ -99,28 +99,37 @@ ylabel('Cost J');
 % Display gradient descent's result
 fprintf('Theta computed from gradient descent: \n');
 fprintf(' %f \n', theta);
-fprintf('\n');
+fprintf('\n');   
 
-   
 
-   X = X(:, 2:end);
-   [X_Norm mu sigma] = normalizeMeanSd_rowMat_colWise(X);
 
+
+
+
+
+
+
+   X = X(:, 2 : end);
    %% SET UP NEURAL NET
    %% -----------------
-   ffNN = ffNN_new(2, [], {'linear'}, true, false);
-   ffNN_immedParamChangesMemory = ffNN_initParamChangesMemory(ffNN);
+   ffNN = ffNN_new(2, [], {'linear'}, {}, true, false);
+   
+   % TRAIN w/o MOMENTUM/NESTEROV
+   % ----------------------------
+   [ffNN trainCostAvg_noRegul ...
+      validCostAvg_noRegul testCostAvg_noRegul ...
+      trainCostsAvg_noRegul_approx ...
+      validCostsAvg_noRegul] = ...
+      ffNN_trainGradDesc(ffNN, ...
+      {X y X y X y}, 0, ...
+      num_iters, 0, false, 1, 1, alpha, 0);
 
-   [ffNN ffNN_immedParamChangesMemory ...
-      trainCostsAvg_noRegul_bfrUpdates ...
-      validCostsAvg_noRegul_aftUpdates] = ...
-      ffNN_gradDesc_nesterovAccGrad_or_momentum...
-      (ffNN, ffNN_immedParamChangesMemory, ...
-      X, y, 0, alpha, 0, num_iters, true, ...
-      X, y, false);
+   costs_list = {J_history(end) trainCostAvg_noRegul ...
+      validCostAvg_noRegul testCostAvg_noRegul ...
+      trainCostsAvg_noRegul_approx(end) ...
+      validCostsAvg_noRegul(end)}
+   
+   equalTest_chain(costs_list, 1e-9)
 
-   [J_history(end) validCostsAvg_noRegul_aftUpdates(end)]
-   equalTest(J_history(end), validCostsAvg_noRegul_aftUpdates(end))
-
-   [theta ffNN.params{2}]
+   weights_list = [theta ffNN.params{2}]
    equalTest(theta, ffNN.params{2})

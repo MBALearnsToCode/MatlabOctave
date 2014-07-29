@@ -1,8 +1,8 @@
 function f = ffNN_new(inputDimSizes_perCase_vec, ...
    addlLayersNumsNodes_vec_OR_paramDimSizes_list = [], ...
-   transformFuncs_list = {}, overview = true, ...
-   initParams = true, sigma_or_epsilon = 1e-2, ...
-   distrib = 'normal')
+   transformFuncs_list = {}, regulFuncs_list = {}, ...
+   overview = true, initParams = true, ...
+   sigma_or_epsilon = 1e-2, distrib = 'normal')
    
    f.hypoOutput = [];
    f.costFuncType = '';
@@ -12,8 +12,10 @@ function f = ffNN_new(inputDimSizes_perCase_vec, ...
    f.inputDimSizes_perCase = inputDimSizes_perCase_vec;
    f.paramDimSizes{1} = [0 0];
    f.transformFuncs{1} = {};
+   f.regulFuncs{1} = {};
    f.activGrads{1} = f.activs{1} = f.signalGrads{1} = ...
       f.paramGrads{1} = f.params{1} = [];
+   f.regulParams(1) = 0;
    
    if iscell...
       (addlLayersNumsNodes_vec_OR_paramDimSizes_list)
@@ -35,33 +37,49 @@ function f = ffNN_new(inputDimSizes_perCase_vec, ...
          numsNodes = [numsNodes 1];
       endif
       numLayers = length(numsNodes);
-      for (l = 2 : numLayers)
-         paramDimSizes{l} = ...
-            [(numsNodes(l - 1) + 1) numsNodes(l)];
-      endfor      
+      
+      % Dimensions of Parameter Matrices can only be set 
+      % later according to whether Transformation Functions
+      % have Bias terms
       
    endif
    
    transformFuncs = [{{}} transformFuncs_list];
-     
-   for (l = ...
-      (length(transformFuncs) + 1) : (numLayers - 1))
+   regulFuncs = [{{}} regulFuncs_list];
+   numTransformFuncs_specified = length(transformFuncs);   
+   for (l = (numTransformFuncs_specified + 1) : numLayers)
       transformFuncs{l} = 'logistic';
    endfor
-   
-   if (length(transformFuncs) == (numLayers - 1))
-   
-      if (paramDimSizes{numLayers}(2) <= 2)
-         transformFuncs{numLayers} = 'logistic';
-      else
-         transformFuncs{numLayers} = 'softmax';
-      endif
-      
+
+   if ~iscell...
+      (addlLayersNumsNodes_vec_OR_paramDimSizes_list)      
+      for (l = 2 : numLayers)         
+         if strcmp(class(transformFuncs{l}), 'char')
+            transformFuncs{l} = ...
+               ffNN_definedTransformFunc(transformFuncs{l});
+         endif         
+         paramDimSizes{l} = ...
+            [(numsNodes(l - 1) ...
+            + transformFuncs{l}.addBias) numsNodes(l)];            
+      endfor   
    endif
+
+   if (numTransformFuncs_specified < numLayers) && ...
+      (paramDimSizes{numLayers} > 2)
+      if (transformFuncs{numLayers}.addBias)
+         transformFuncs{numLayers} = 'softmax';
+      else
+         transformFuncs{numLayers} = 'softmaxNoBias';         
+      endif      
+   endif
+   
+   for (l = (length(regulFuncs) + 1) : numLayers)
+      regulFuncs{l} = 'L2';
+   endfor
    
    for (l = 2 : numLayers)
       f = ffNN_addLayer(f, paramDimSizes{l}, ...
-         transformFuncs{l});
+         transformFuncs{l}, regulFuncs{l});
    endfor
 
    if (initParams)

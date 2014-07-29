@@ -4,7 +4,7 @@ function zzzTest_arrProd(numRuns = 1)
 
    for (run = 1 : numRuns)
 
-      fprintf('\rTest Run no.: %i', run);
+      fprintf('\rTest #%i', run);
 
       m = unidrnd(6); n = unidrnd(6); p = unidrnd(6);
 
@@ -34,7 +34,7 @@ function zzzTest_arrProd(numRuns = 1)
 
    endfor
 
-   fprintf('\n%i successes out of %i tests\n', successes, numRuns);
+   fprintf('\n%i Successes / %i Tests\n', successes, numRuns);
    
    for i = 1:failures
        fail(i).Mat1
