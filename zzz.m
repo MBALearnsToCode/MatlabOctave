@@ -1,3 +1,12 @@
+% This script does the following:
+% 1. Clear all variables from memory
+% 2. Close all plot windows
+% 3. Clear the output screen
+% 4. Set working directory
+% 5. Add folders to the search path
+
+
+
 % RESET
 % -----
 PS1('CMD>>>   '); clear; close all; clc;
