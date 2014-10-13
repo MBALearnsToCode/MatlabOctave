@@ -5,11 +5,14 @@ function [costFuncAvg weightedTargetArr] = ...
 
    switch (costFuncType)
       case ('SE')
-         funcCostAvg = @costFuncAvg_sqErr;         
+         funcCostAvg = @costFuncAvg_sqErr;
+         costFuncType_isCrossEntropy = false;
       case ('CE-L')
          funcCostAvg = @costFuncAvg_crossEntropy_logistic;
+         costFuncType_isCrossEntropy = true;
       case ('CE-S')
-         funcCostAvg = @costFuncAvg_crossEntropy_softmax;          
+         funcCostAvg = @costFuncAvg_crossEntropy_softmax;
+         costFuncType_isCrossEntropy = true;
    endswitch
    
    if iscell(targetArrs_args)
@@ -64,11 +67,18 @@ function [costFuncAvg weightedTargetArr] = ...
    if (returnGrad)      
       calcs = funcCostAvg...
          (hypoArr, weightedTargetArr, true, casesDim);
+      if (costFuncType_isCrossEntropy)
+         costFuncAvg.accuracyAvg = calcs.accuracyAvg;
+      endif
       costFuncAvg.val = calcs.val;
       costFuncAvg.grad = calcs.grad;
    else     
-      costFuncAvg.val = funcCostAvg...
-         (hypoArr, weightedTargetArr, false, casesDim).val;      
+      calcs = funcCostAvg...
+         (hypoArr, weightedTargetArr, false, casesDim);
+      if (costFuncType_isCrossEntropy)
+         costFuncAvg.accuracyAvg = calcs.accuracyAvg;
+      endif
+      costFuncAvg.val = calcs.val;
    endif
 
 endfunction
