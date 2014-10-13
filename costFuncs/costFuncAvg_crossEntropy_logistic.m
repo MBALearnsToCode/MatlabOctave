@@ -1,5 +1,5 @@
 function f = costFuncAvg_crossEntropy_logistic...
-   (hypoArr, targetArr, returnGrad = true, casesDim = 1)
+   (hypoArr, targetArr, returnGrad = false, casesDim = 1)
 
    m = size(targetArr, casesDim);
    f.val = (crossEntropy(targetArr, hypoArr) ...
@@ -9,4 +9,4 @@ function f = costFuncAvg_crossEntropy_logistic...
          - (1 - targetArr) ./ (1 - hypoArr)) / m;
    endif
    
-end
+endfunction

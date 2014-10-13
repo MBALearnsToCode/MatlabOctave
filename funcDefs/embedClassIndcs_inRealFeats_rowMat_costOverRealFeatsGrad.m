@@ -12,4 +12,4 @@ function f = ...
          * costOverOutputGrad(:, ((j - 1) * nF + 1) : (j * nF));
    endfor
       
-end
+endfunction

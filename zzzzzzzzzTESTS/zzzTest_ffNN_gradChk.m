@@ -1,6 +1,5 @@
 function results = zzzTest_ffNN_gradChk...
-   (numRuns = 1, ffNN = {}, ...
-   perturb = 1e-6, prec = 1e-6)
+   (numRuns = 1, ffNN_given = {}, perturb = 1e-6, prec = 1e-6)
   
    % PARAMETERS
    % ----------
@@ -9,6 +8,7 @@ function results = zzzTest_ffNN_gradChk...
    maxNumNodesPerLayer = 3;
    maxNumInputClasses = 3;
    maxNumInputEmbedFeatures = 3;
+   maxNumTargetOutputs = 3;
    inputMagnOrder = 1e1;
    initParamMagnOrder = 1e-1;
 
@@ -24,70 +24,64 @@ function results = zzzTest_ffNN_gradChk...
 
       % SET MODEL STRUCTURE
       % -------------------
-      if isempty(ffNN)
-      
-         numsNodes(1) = nI = unidrnd(maxNumNodesPerLayer);
-         transformFuncs = regulFuncs = paramDimSizes = {};
+      if isempty(ffNN_given)
+               
+         transformFuncs = weightDimSizes = regulFuncs = {};
+         regulParams = [];
 
+         numsNodes(1) = nI = unidrnd(maxNumNodesPerLayer);
          % SET featEmbed
          % -------------
          featEmbed = randElem([true false]);
          
-         if (featEmbed)
-         
+         if (featEmbed)         
             nC = unidrnd(maxNumInputClasses);
             nF = unidrnd(maxNumInputEmbedFeatures);
-            paramDimSizes{1} = [nC nF];
+            weightDimSizes{1} = [nC nF];
             transformFuncs{1} = ...
-               funcEmbedClassIndcs_inRealFeats_rowMat;
+               embedClassIndcs_inRealFeats_transformFuncHandles;
             numsNodes(2) = nI * nF;
-            regulFuncs{1} = randElem({'L1' 'L2' ...
-               const_MacKay_empBayes_str}); 
-            regulParams(1) = randElem(const_regulParams_10);
-            
-         else
-         
+         else         
             numsNodes(2) = unidrnd(maxNumNodesPerLayer);
             addBias = rand > 0.5;
-            paramDimSizes{1} = ...
+            weightDimSizes{1} = ...
                [(numsNodes(1) + addBias) numsNodes(2)];
             transformFuncs{1} = randElem...
-      ({funcLinear_inputRowMat_n_biasWeightMat(addBias) ...
-      funcLogistic_inputRowMat_n_biasWeightMat(addBias) ...
-      funcSoftmax_inputRowMat_n_biasWeightMat(addBias)});
-            regulFuncs{1} = randElem({'L1' 'L2' ...
-               const_MacKay_empBayes_str}); 
-            regulParams(1) = randElem(const_regulParams_10); 
-          
+               ({linear_transformFuncHandles(addBias) ...
+               logistic_transformFuncHandles(addBias) ...
+               softmax_transformFuncHandles(addBias)});            
          endif
          
-         for (k = ...
-            2 : (1 + unidrnd(maxNumLayersExclInputOrEmbed)))
+         regulFuncs{1} = randElem({'L1' 'L2' ...
+            const_MacKay_empBayes_str}); 
+         regulParams(1) = randElem(const_regulParams_10);                 
          
+         for (k = ...
+            2 : (1 + unidrnd(maxNumLayersExclInputOrEmbed)))         
             numsNodes(k + 1) = unidrnd(maxNumNodesPerLayer);
             addBias = rand > 0.5;
-            paramDimSizes{k} = ...
+            weightDimSizes{k} = ...
                [(numsNodes(k) + addBias) numsNodes(k + 1)];
             transformFuncs{k} = randElem...
-      ({funcLinear_inputRowMat_n_biasWeightMat(addBias) ...
-      funcLogistic_inputRowMat_n_biasWeightMat(addBias) ...
-      funcSoftmax_inputRowMat_n_biasWeightMat(addBias)});
+               ({linear_transformFuncHandles(addBias) ...
+               logistic_transformFuncHandles(addBias) ...
+               softmax_transformFuncHandles(addBias)});
             regulFuncs{k} = randElem({'L1' 'L2' ...
                const_MacKay_empBayes_str}); 
-            regulParams(k) = randElem(const_regulParams_10);
-            
+            regulParams(k) = randElem(const_regulParams_10);            
          endfor
          
-         NN = ffNN_new(nI, paramDimSizes, transformFuncs, ...
-            regulFuncs, false, true, initParamMagnOrder);
+         ffNN = class_ffNN(nI, weightDimSizes, ...
+            transformFuncs, false, true, initParamMagnOrder);
             
          m = unidrnd(maxNumCases);
          
          if (featEmbed)
             input_Arr = tests{r}.input_Arr = ...
                unidrnd(nC, [m nI]);
-            NN.params{1} *= 1 ...
-               * inputMagnOrder / initParamMagnOrder;
+            w = ffNN.weights;
+            ffNN.weights{1} = ...
+               (inputMagnOrder / initParamMagnOrder) * w{1};
          else
             input_Arr = tests{r}.input_Arr = ...
                randUnif([m nI], inputMagnOrder);
@@ -95,9 +89,9 @@ function results = zzzTest_ffNN_gradChk...
          
       else
       
-         NN = ffNN;
+         ffNN = ffNN_given;
          m = unidrnd(maxNumCases);
-         inputDimSizes_perCase = NN.inputDimSizes_perCase;
+         inputDimSizes_perCase = ffNN.inputDimSizes_perCase;
          input_Arr = tests{r}.input_Arr = ...
             randUnif([m inputDimSizes_perCase], ...
             inputMagnOrder);
@@ -105,32 +99,40 @@ function results = zzzTest_ffNN_gradChk...
       endif  
    
       % RANDOMIZE TARGET OUTPUT 
-      % -----------------------      
-      nO = NN.paramDimSizes{NN.numLayers}(2);
-      if strcmp(NN.costFuncType, 'CE-S')
-         targetOutput_rowMat = ...
-            tests{r}.targetOutput_rowMat = ...
-            predictClass_rowMat(rand([m nO]));
+      % -----------------------
+      numTargetOutputs = unidrnd(maxNumTargetOutputs);
+      outputWeightDimSizes = ffNN.weightDimSizes;
+      nO = outputWeightDimSizes{ffNN.numTransforms}(2);
+      targetOutputs_rowMats_list = {};
+      targetOutputs_weightages = [];
+      if strcmp(ffNN.costFuncType, 'CE-S')
+         for (t = 1 : numTargetOutputs)
+            targetOutputs_rowMats_list{t} = ...
+               tests{r}.targetOutputs_rowMats_list{t} = ...         
+               predictClass_rowMat(rand([m nO]));
+            targetOutputs_weightages(t) = rand;
+         endfor
       else
-         targetOutput_rowMat = ...
-            tests{r}.targetOutput_rowMat = ...
-            randUnif([m nO]) > 0;
+         for (t = 1 : numTargetOutputs)
+            targetOutputs_rowMats_list{t} = ...
+               tests{r}.targetOutputs_rowMats_list{t} = ...         
+               randUnif([m nO]) > 0;
+            targetOutputs_weightages(t) = rand;
+         endfor
       endif
-       
+      targetOutputs_rowMats_args = ...
+         {targetOutputs_rowMats_list ...
+         targetOutputs_weightages};
+         
       % COMPUTE ANALYTIC GRADIENTS
-      % --------------------------     
-      NN = ffNN_fProp_bProp...
-         (NN, input_Arr, targetOutput_rowMat, 0, ...
-         {regulFuncs regulParams});         
-      tests{r}.ffNN = NN;
+      % --------------------------
+      [weightGrads, ~, ~, ~, ~, weightRegulParams] = ...
+         fProp_bProp(ffNN, input_Arr, ...
+         targetOutputs_rowMats_args, false, ...
+         {regulFuncs regulParams}, true);
       
-      if (featEmbed)
-         aGrad = tests{r}.aGrad = convertArrsToColVec...
-            (NN.paramGrads);
-      else
-         aGrad = tests{r}.aGrad = convertArrsToColVec...
-            ([NN.activGrads{1} NN.paramGrads]);
-      endif
+      aGrad = tests{r}.aGrad = ...
+         convertArrsToColVec(weightGrads);      
 
       % COMPUTE NUMERICAL GRADIENTS
       % ---------------------------
@@ -141,24 +143,14 @@ function results = zzzTest_ffNN_gradChk...
             regulFuncs2{k} = 'L2';
          endif
       endfor
-      regulParams2 = NN.regulParams(2 : end);
-      if (featEmbed)
-         costAvgFunc = @(p_v) ...
-            ffNN_costAvgWRegul_n_inputGrad_n_paramGrads...
-            (NN, [input_Arr(:); p_v], ...
-            targetOutput_rowMat, 0, ...
-            {regulFuncs2 regulParams2}, false);
-         nGrad = tests{r}.nGrad = gradApprox(costAvgFunc, ...
-            convertArrsToColVec(NN.params), perturb);         
-      else
-         costAvgFunc = @(ip_v) ...
-            ffNN_costAvgWRegul_n_inputGrad_n_paramGrads...
-            (NN, ip_v, targetOutput_rowMat, 0, ...
-            {regulFuncs2 regulParams2});
-         nGrad = tests{r}.nGrad = gradApprox(costAvgFunc, ...
-            convertArrsToColVec([input_Arr NN.params]), ...
-            perturb);
-      endif
+      regulParams2 = weightRegulParams;
+      costAvgFunc = @(w_v) ...
+         costAvgInclWeightPenalty_n_weightGrads...
+         (ffNN, w_v, input_Arr, ...
+         targetOutputs_rowMats_args, false, ...
+         {regulFuncs2 regulParams2}, false);
+      nGrad = tests{r}.nGrad = gradApprox(costAvgFunc, ...
+            convertArrsToColVec(ffNN.weights), perturb);
       
       % COMPARE GRADIENTS  
       % -----------------
@@ -190,20 +182,22 @@ function results = zzzTest_ffNN_gradChk...
    results.succsRelPct = succsRel / numRuns * 100;
    results.failsRel = failsRel;
 
-   fprintf('\n\nAbsolute Comparison Success Percent: %g\n', results.succsAbsPct);
+   fprintf('\n\nAbsolute Comparison Success Percent: %g\n', ...
+      results.succsAbsPct);
    fprintf('   abs fails:\n');
 
    for i = failsAbs
       fprintf(' %i (%g)', i, tests{i}.gradAvgAbsD);
    endfor
 
-   fprintf('\n\nRelative Comparison Success Percent: %g\n', results.succsRelPct);
+   fprintf('\nRelative Comparison Success Percent: %g\n', ...
+      results.succsRelPct);
    fprintf('   rel fails:\n');
 
    for i = failsRel
       fprintf(' %i (%g)', i, tests{i}.gradRelD);
    endfor
 
-   fprintf('\n\n');
+   fprintf('\n');
    
-end
+endfunction

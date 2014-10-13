@@ -1,5 +1,5 @@
 function f = costFuncAvg_crossEntropy_softmax...
-   (hypoArr, targetArr, returnGrad = true, casesDim = 1)
+   (hypoArr, targetArr, returnGrad = false, casesDim = 1)
 
    m = size(targetArr, casesDim);
    f.val = crossEntropy(targetArr, hypoArr) / m;
@@ -7,4 +7,4 @@ function f = costFuncAvg_crossEntropy_softmax...
       f.grad = - (targetArr ./ hypoArr) / m;
    endif
    
-end
+endfunction

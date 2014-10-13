@@ -15,14 +15,40 @@ function f = setTrainValidTestData(dataArgs_list, ...
 
       randShuff_vec = randperm(min(size(dataInput, 1), ...
          rows(dataTargetOutput)));
+         
+      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+      % fprintf('setTrainValidTestData: to SUBSET\n');
+      % dataInput
+      % dataTargetOutput
+      % randShuff_vec
+      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%      
+      
       dataInput = arrOpAcrossDim(dataInput, 'subset', ...
          randShuff_vec);
+         
+      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+      % fprintf('setTrainValidTestData: done Subsetting dataInput\n');     
+      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    
+         
       dataTargetOutput = ...
          arrOpAcrossDim(dataTargetOutput, 'subset', ...
          randShuff_vec);
          
+      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+      % fprintf('setTrainValidTestData: to PARTITION\n');
+      % dataInput
+      % dataTargetOutput
+      % proportionsTrainValid
+      % trainBatchSize
+      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%      
+      
       dataInput_partitioned = partitionData(dataInput, ...
          proportionsTrainValid, trainBatchSize, false);
+         
+      %%%%%%%%%%%%%%%%%%%%%%%%%
+      % fprintf('setTrainValidTestData: done dataInput\n');
+      %%%%%%%%%%%%%%%%%%%%%%%%%
+      
       dataTargetOutput_partitioned = ...
          partitionData(dataTargetOutput, ...
          proportionsTrainValid, trainBatchSize, false);

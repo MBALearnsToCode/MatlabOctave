@@ -4,8 +4,10 @@ function f = linearFunc_Mat(Mat, ...
    f.val = Mat;
  
    if (returnDeriv)
-
       switch (derivForm)
+
+         case ('eff')
+            f.deriv = 1;
 
          case ('gen')
             [m n] = size(Mat);
@@ -15,12 +17,8 @@ function f = linearFunc_Mat(Mat, ...
                   f.deriv(i, j, j, i) = 1;
                endfor
             endfor
-
-         case ('eff')
-            f.deriv = 1;
-
-      endswitch
- 
+            
+      endswitch 
    endif
 
-end
+endfunction

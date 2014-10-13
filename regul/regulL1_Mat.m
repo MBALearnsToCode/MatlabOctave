@@ -1,8 +1,11 @@
-function f = regulL1_Mat(biasWeight_Mat, exceptBias = true)
+function f = regulL1_Mat(biasWeight_Mat, exceptBias = true, ...
+   returnGrad = false)
 
    f.val = distAbs...
       (rmBiasElems(biasWeight_Mat, exceptBias), 0, ...
       'Manhattan');
-   f.grad = sign(zeroBiasElems(biasWeight_Mat, exceptBias));
+   if (returnGrad)
+      f.grad = sign(zeroBiasElems(biasWeight_Mat, exceptBias));
+   endif
    
 end

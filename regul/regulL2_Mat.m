@@ -1,8 +1,11 @@
-function f = regulL2_Mat(biasWeight_Mat, exceptBias = true)
+function f = regulL2_Mat(biasWeight_Mat, exceptBias = true, ...
+   returnGrad = false)
 
    f.val = distAbs...
       (rmBiasElems(biasWeight_Mat, exceptBias), 0, ...
       'EuclidSq') / 2;
-   f.grad = zeroBiasElems(biasWeight_Mat, exceptBias);      
+   if (returnGrad)
+      f.grad = zeroBiasElems(biasWeight_Mat, exceptBias);
+   endif
 
 end

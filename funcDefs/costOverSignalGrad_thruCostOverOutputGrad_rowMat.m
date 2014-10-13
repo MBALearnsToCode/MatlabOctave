@@ -18,4 +18,4 @@ function f = ...
 
    endswitch
 
-end
+endfunction

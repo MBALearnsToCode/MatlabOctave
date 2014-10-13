@@ -1,37 +1,74 @@
-function f = costFuncAvgCalcs...
-   (hypoArr, targetArr, ...
-   targetArr_isClassIndcsColVec_ofNumClasses = 0, ...
-   costFuncType, returnGrad = true, casesDim = 1)
+function [costFuncAvg weightedTargetArr] = ...
+   costFuncAvgCalcs(hypoArr, targetArrs_args, ...
+   targetArrs_areClassIndcsColVecs_ofNumClasses = false, ...
+   costFuncType = 'CE-L', returnGrad = false, casesDim = 1)
 
    switch (costFuncType)
-
       case ('SE')
-         funcCostAvg = @costFuncAvg_sqErr;
-         
+         funcCostAvg = @costFuncAvg_sqErr;         
       case ('CE-L')
          funcCostAvg = @costFuncAvg_crossEntropy_logistic;
-
       case ('CE-S')
-         funcCostAvg = @costFuncAvg_crossEntropy_softmax;
-          
+         funcCostAvg = @costFuncAvg_crossEntropy_softmax;          
    endswitch
    
-   if (targetArr_isClassIndcsColVec_ofNumClasses)
-      targetArr_toUse = convertClassIndcsColVec_toRowMat...
-         (targetArr, ...
-         targetArr_isClassIndcsColVec_ofNumClasses);
-   else
-      targetArr_toUse = targetArr;
-   end;
+   if iscell(targetArrs_args)
+      multipleTargets = true;
+      targetArrs_list = targetArrs_args{1};
+      l1 = length(targetArrs_list);
+      targetWeightages = targetArrs_args{2};
+      if isempty(targetWeightages)
+         targetWeightages = ones([1 l1]) / l1;
+      endif
+      l2 = length(targetWeightages);      
+      if (l1 < l2)
+         numTargets = l1;
+         targetWeightages = targetWeightages(1 : numTargets);
+      elseif (l1 > l2)
+         numTargets = l2;
+         targetArrs_list = targetArrs_list(1 : numTargets)
+      else 
+         numTargets = l1;
+      endif
+      targetWeightages = targetWeightages ...
+         / sum(targetWeightages);    
+   else      
+      multipleTargets = false;
+      targetArr = targetArrs_args;
+   endif   
    
-   if (returnGrad)
-      calcs = funcCostAvg...
-         (hypoArr, targetArr_toUse, returnGrad, casesDim);
-      f.val = calcs.val;
-      f.grad = calcs.grad;
+   if (targetArrs_areClassIndcsColVecs_ofNumClasses)
+      if (multipleTargets)
+         func = @(colVec) convertClassIndcsColVec_toRowMat...
+            (colVec, ...
+            targetArrs_areClassIndcsColVecs_ofNumClasses);
+         targetArrs_list = cellfun(func, targetArrs_list, ...
+            'UniformOutput', false);
+      else
+         targetArr = convertClassIndcsColVec_toRowMat...
+            (targetArr, ...
+            targetArrs_areClassIndcsColVecs_ofNumClasses);
+      endif
+   endif
+   
+   if (multipleTargets)
+      weightedTargetArr = zeros(size(targetArrs_list{1}));
+      for (t = 1 : numTargets)
+         weightedTargetArr += targetWeightages(t) ...
+            * targetArrs_list{t};
+      endfor
    else
-      f.val = funcCostAvg...
-         (hypoArr, targetArr_toUse, returnGrad, casesDim).val;
+      weightedTargetArr = targetArr;
+   endif
+   
+   if (returnGrad)      
+      calcs = funcCostAvg...
+         (hypoArr, weightedTargetArr, true, casesDim);
+      costFuncAvg.val = calcs.val;
+      costFuncAvg.grad = calcs.grad;
+   else     
+      costFuncAvg.val = funcCostAvg...
+         (hypoArr, weightedTargetArr, false, casesDim).val;      
    endif
 
-end
+endfunction

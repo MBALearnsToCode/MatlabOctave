@@ -18,12 +18,21 @@ function f = arrOpAcrossDim(Arr, op, op_vec = [], opDim = 1)
    switch (op)
    
       case ('subset')
-         dimSzs_perm(1) = length(op_vec);
-         f_perm = reshape(Arr_perm(op_vec,:)(:), ...
+         dimSzs_perm(1) = length(op_vec);         
+         
+         %%%%%%%%%%
+         % fprintf('arrOpAcrossDim: SUBSET\n');
+         % Arr_perm
+         % op_vec
+         % ArrPermOpVec = Arr_perm(op_vec, :)(:)
+         % dimSzs_perm
+         %%%%%%%%%%%
+         
+         f_perm = Reshape(Arr_perm(op_vec, :)(:), ...
             dimSzs_perm);
 
       case ('shuffle')
-         f_perm = reshape(Arr_perm...
+         f_perm = Reshape(Arr_perm...
             (randperm(dimSzs_perm(1)),:)(:), ...
             dimSzs_perm);
 
@@ -39,8 +48,17 @@ function f = arrOpAcrossDim(Arr, op, op_vec = [], opDim = 1)
                floor(dimSzs_perm(1) / op_vec(1));
             dimSzs_perm(1) = ...
                reshape_vec(numDims + 1) * reshape_vec(1);
-            Arr_perm = reshape(Arr_perm...
-               (1 : dimSzs_perm(1),:)(:), dimSzs_perm);
+               
+            %%%%%%%%%%
+            % fprintf('arrOpAcrossDim: SPLIT\n');
+            % Arr_perm
+            % ArrPermDimSzsPerm = Arr_perm...
+            %    (1 : dimSzs_perm(1), :)(:)
+            % dimSzs_perm
+            %%%%%%%%%%%%%%   
+            
+            Arr_perm = Reshape(Arr_perm...
+               (1 : dimSzs_perm(1), :)(:), dimSzs_perm);
             splitPerm_vec = [(2 : numDims) 1];
             Arr_permForSplit = ...
                arrPerm(Arr_perm, splitPerm_vec);
@@ -48,7 +66,7 @@ function f = arrOpAcrossDim(Arr, op, op_vec = [], opDim = 1)
             reshape_vec_reorderedForSplit = ...
                reshape_vec(splitPerm_vec);
             f_permAfterSplit = ...
-               reshape(Arr_permForSplit(:), ...
+               Reshape(Arr_permForSplit(:), ...
                reshape_vec_reorderedForSplit); 
             f_perm = ...
                arrIPerm(f_permAfterSplit, splitPerm_vec);

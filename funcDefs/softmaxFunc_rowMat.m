@@ -9,9 +9,16 @@ function f = softmaxFunc_rowMat(rowMat, ...
 
    f.val = bsxfun(@rdivide, expMat, sum(expMat, 2));
    
-   if (returnDeriv)
-   
+   if (returnDeriv)   
       switch (derivForm)
+         
+         case ('eff')
+            f.deriv = zeros([m n n]);
+            for (i = 1 : m)         
+               val = f.val(i, :);
+               f.deriv(i, :, :) = permute...
+                  (diag(val) - val' * val, [3 1 2]);
+            endfor
          
          case ('gen')
             f.deriv = zeros([m n n m]);
@@ -25,17 +32,8 @@ function f = softmaxFunc_rowMat(rowMat, ...
                   endfor
                endfor
             endfor
-   
-         case ('eff')
-            f.deriv = zeros([m n n]);
-            for (i = 1 : m)         
-               val = f.val(i, :);
-               f.deriv(i, :, :) = permute...
-                  (diag(val) - val' * val, [3 1 2]);
-            endfor
-
-      endswitch
-      
+            
+      endswitch      
    endif
 
-end
+endfunction
