@@ -5,10 +5,8 @@
 % 4. Set working directory
 % 5. Add folders to the search path
 
+warningSettings;
 
-
-% RESET
-% -----
 PS1('CMD>>>   '); clear; close all; clc;
 
 cd 'D:\Cloud\Dropbox\MBALearnsToCode\MatlabOctave';

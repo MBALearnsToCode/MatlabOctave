@@ -1,4 +1,4 @@
-function f = accuracyAvg(hypoArr, targetArr);
+function f = accuracyAvg_softmax(hypoArr, targetArr);
 
    f = arrSumAllDims(targetArr .* hypoArr);
    

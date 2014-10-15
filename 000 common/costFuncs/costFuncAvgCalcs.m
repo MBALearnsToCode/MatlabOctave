@@ -29,7 +29,7 @@ function [costFuncAvg weightedTargetArr] = ...
          targetWeightages = targetWeightages(1 : numTargets);
       elseif (l1 > l2)
          numTargets = l2;
-         targetArrs_list = targetArrs_list(1 : numTargets)
+         targetArrs_list = targetArrs_list(1 : numTargets);
       else 
          numTargets = l1;
       endif

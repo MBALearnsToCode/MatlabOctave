@@ -1,4 +1,4 @@
-function f = zzzTest_ffNN_vs_logReg_wRegul(numRuns = 1)
+function f = zzzTest_ffNN_vs_logReg(numRuns = 1)
 
    % PARAMETERS
    % ----------

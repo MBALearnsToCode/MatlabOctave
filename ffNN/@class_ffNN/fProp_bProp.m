@@ -23,25 +23,25 @@ function [weightGrads costAvg_exclWeightPenalty ...
       false([1 numTransforms]);
    weightRegul_byMacKay_empBayes = false;
    
-   for (l = 1 : numTransforms)
-      
-      if (l > 1)
-         if (length(weightRegulFuncs) < l)
-            weightRegulFuncs{l} = weightRegulFuncs{l - 1};
-         endif
-         if (length(weightRegulParams) < l)
-            weightRegulParams(l) = weightRegulParams(l - 1);
-         endif
+   for (l = 2 : numTransforms)
+      if (length(weightRegulFuncs) < l)
+         weightRegulFuncs{l} = weightRegulFuncs{l - 1};
       endif
-      
-      if strcmp(weightRegulFuncs{l}, ...
-         const_MacKay_empBayes_str)
+      if (length(weightRegulParams) < l)
+         weightRegulParams(l) = weightRegulParams(l - 1);
+      endif
+   endfor
+  
+   for (l = 1 : numTransforms)
+      weightRegulFunc = weightRegulFuncs{l};
+      if strcmp(weightRegulFunc, const_MacKay_empBayes_str)
          weightRegul_byMacKay_empBayes = ...
             weightRegul_byMacKay_empBayes_perLayer(l) = true;
+      endif      
+      if strcmp(class(weightRegulFunc), 'char')
+         weightRegulFuncs{l} = ...
+            convertText_toRegulFunc(weightRegulFunc);
       endif
-      weightRegulFuncs{l} = ...
-         convertText_toRegulFunc(weightRegulFuncs{l});
-         
    endfor
 
    if isempty(targetOutputs_rowMats_args)
@@ -136,7 +136,7 @@ function [weightGrads costAvg_exclWeightPenalty ...
       
          tic;
          if (weightRegulParam)            
-            if (bProp) 
+            if (bProp)               
                weightRegulCalcs = weightRegulFuncs{l}...
                   (weight, transformFunc.addBias, true);
                weightRegulCost += weightRegulParam ...
