@@ -9,8 +9,8 @@ warningSettings;
 
 PS1('CMD>>>   '); clear; close all; clc;
 
-cd 'D:\Cloud\Dropbox\MBALearnsToCode\youTeach_machineLearn';
+cd 'D:\Cloud\Dropbox\MBALearnsToCode\youTeach.machineLearn';
 addpath(genpath...
-   ('D:\Cloud\Dropbox\MBALearnsToCode\youTeach_machineLearn'));
+   ('D:\Cloud\Dropbox\MBALearnsToCode\youTeach.machineLearn'));
 
 more off;
