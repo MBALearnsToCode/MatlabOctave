@@ -80,5 +80,5 @@ function [costFuncAvg weightedTargetArr] = ...
       endif
       costFuncAvg.val = calcs.val;
    endif
-
+   
 endfunction
