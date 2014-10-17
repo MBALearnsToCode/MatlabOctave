@@ -1,0 +1,307 @@
+---
+title: "Forward-Feeding Neural Networks (FFNNs): Forward & Backward Passes"
+output: html_document
+---
+<br><br><br>
+
+*STUFF TO KNOW BY HEART - EVEN WHEN DRUNK!*
+
+*1. FFNNs are **supervised** learning models*
+
+*2. **Cost functions** measure degree of prediction error*
+
+*3. **Training** is mathematical optimization that makes cost decrease*
+
+*4. An FFNN consists of **layers** of **transformation functions** and **weights***
+
+*5. FFNNs' **forward pass** models **hypothesized output***
+
+*6. FFNNs' **backward pass** computes **partial derivatives** of cost function with respect to weight layers, for use in mathematical optimization*
+
+<br><br><br>
+<br><br><br>
+<br><br><br>
+<br><br><br>
+<br><br><br>
+
+### FFNNs: Supervised Learning Models with Continuous Real-Valued Scalar "Hypothesis-vs.-Target" Cost Functions
+FFNNs are **supervised** learning models: given Input $\mathbf X$ - a matrix/array representing $m$ cases of input features - and Target Output $\mathbf Y$ representing the $m$ corresponding "**right answers**", a Supervised Learning Model tries to learn a structured mapping that transforms $\mathbf X$ to Hypothesized Output $\mathbf H$ that is similar/close to $\mathbf Y$.
+
+The extent of $\mathbf H$'s similarity/closeness to $\mathbf Y$ - which is the criterion to judge how well a Supervised Learning Model learns to mimick $\mathbf Y$ from knowing $\mathbf X$ - is numerically measured by a certain specified scalar cost function $c(\mathbf H, \mathbf Y)$. This function $c$'s value should be small when $\mathbf H$ is very "similar" or "close" to $\mathbf Y$, and large otherwise. In almost all Supervised Learning Models in practical use nowadays, $c(\mathbf H, \mathbf Y)$ is a continous real-valued function and its partial derivative $\frac {\partial c} {\partial \mathbf H}$ with respect to $\mathbf H$ is computable as a certain function $d(\mathbf H, \mathbf Y)$. Cost functions are usually measured on an average per-case basis.
+
+The task of helping a Supervised Learning Model learn - or so-called "**training**" it - involves mathematical optimization procedures that make the average per-case $\mathbf H$-vs.-$\mathbf Y$ cost decrease when we let the Model see more and more cases of inputs and corresponding "right-answer" target outputs. Once trained until its cost has decreased to an acceptably low level, a Model will make only small errors and hence be a good tool for predicting the output $\mathbf y$ from a not-yet-seen input $\mathbf x$.
+
+Note that we are using the rather gentle phrase "acceptably low" instead of the stronger word "minimized". This is because when a Supervised Learning Model does achieve the absolutely smallest possible error rate during the "training" process, it will have over-learned: not only will it have learned the overall rules of the game (which are useful when generalizing to new cases), it will have also **memorized various irrelevant idiosyncracies** specific to the training data (which **hurts** its generalization ability). We'll discuss this so-called "**over-fitting**" issue separately.
+<br><br><br>
+<br><br><br>
+<br><br><br>
+<br><br><br>
+<br><br><br>
+
+### Model Structure / Hypothesis: Forward Pass
+In a generalized sense, an FFNN models Hypothesized Output $\mathbf H = h(\mathbf X , \mathbf W ^{\left[ 1 \right]}, \mathbf W ^{\left[ 2 \right]}, \dotsc, \mathbf W ^{\left[ L \right]})$ through 1 input layer and $L$ additional layers of transformation functions and parameters (called "weights") in the following manner:
+
+$$
+\begin{align}
+      & \text{network layer 1: } \mathbf A^{\left[ 1 \right]} =
+            \text{Input } \mathbf X \\     
+      & \text{network layer 2: } \mathbf A^{\left[ 2 \right]} =
+            f^{\left[ 1 \right]}
+            (\mathbf A^{\left[ 1 \right]}, \mathbf W^{\left[ 1 \right]}) \\
+      & \text{network layer 3: } \mathbf A^{\left[ 3 \right]} =
+            f^{\left[ 2 \right]}
+            (\mathbf A^{\left[ 2 \right]}, \mathbf W^{\left[ 2 \right]}) \\
+      & \dots \\
+      & \text{network layer } (L + 1) \text{: }
+            \mathbf H = \mathbf A^{\left[ L + 1 \right]} =
+            f^{\left[ L \right]}
+            (\mathbf A^{\left[ L \right]}, \mathbf W^{\left[ L \right]})
+\end{align}
+$$
+
+where:
+
+* $\mathbf A$'s are called the layers' "**activations**" and inter-layer parameters $\mathbf W$'s are called "**weights**". The way the FFNN computes $\mathbf H$ from input $\mathbf X$ through layers of transformation functions and weights is called the "**forward pass**".
+
+* Each "**forward function**" $f$ is a structurally pre-defined transformation function $\mathbf{Output} = f(\mathbf{Input}, \mathbf{Parameter})$ such that, given partial derivative $\frac {\partial v} {\partial \mathbf{Output}}$ of a scalar variable $v$ with respect to $\mathbf{Output}$, the following partial derivatives with respect to $\mathbf{Input}$ and $\mathbf{Parameter}$ can be computed by certain "**backward functions**" $b_{Input}$ and $b_{Parameter}$:
+
+$$
+\begin{align}
+      & \frac {\partial v} {\partial \mathbf{Input}} =
+            b_{Input}(\frac {\partial v} {\partial \mathbf{Output}}, 
+            \text{local state}) \\
+      & \frac {\partial v} {\partial \mathbf{Parameter}} =
+            b_{Parameter}(\frac {\partial v} {\partial \mathbf{Output}}, 
+            \text{local state}) \\
+      & \text{where the term "local state" refers to current values} \\
+      & \text{of function } f \text{'s }
+            \mathbf{Input} \text{, } \mathbf{Parameter} \text{ and }
+            \mathbf{Output} \\
+      \\
+      & \text{(for each neural network layer $l$, we henceforth denote} \\
+      & \text{its corresponding "backward functions" $b^{\left[ l \right]}_A$ and $b^{\left[ l \right]}_W$)}
+\end{align}
+$$
+
+The purpose of knowing such partial derivatives will become clear later when we discuss the "**backward pass**" or "**backpropagation**" procedure.
+<br><br><br>
+
+### Backward Pass / Backpropagation procedure to derive $\frac {\partial c} {\partial \mathbf W^{\left[ l \right]}}$ for each layer $l$, to be used in optimization
+With the structure of the transformation functions $f$'s fixed, in the learning/training process, our job is to adjust/update the values of weight layers $\mathbf W ^{\left[ 1 \right]}$, $\mathbf W ^{\left[ 2 \right]}$, ..., $\mathbf W ^{\left[ L \right]}$ so as to make the cost function $c(\mathbf H, \mathbf Y)$ decrease. This invariably requires us to know or be able to estimate the partial derivative $\frac {\partial c} {\partial \mathbf W^{\left[ l \right]}}$ for each layer $l$. We can compute such partial derivatives through the following "backpropagating" procedure:
+<br>
+
+$$
+\begin{align}
+      \begin{split}
+            & \frac {\partial c} {\partial \mathbf A^{\left[ L + 1 \right]}} =
+                  \frac {\partial c} {\partial \mathbf H} =
+                  d(\mathbf H, \mathbf Y)
+            \\
+            \Downarrow
+            \\
+            & \frac {\partial c} {\partial \mathbf A^{\left[ L \right]}} =
+                  b^{\left[ L \right]}_A(
+                  \frac {\partial c} {\partial \mathbf A^{\left[ L + 1 \right]}}, 
+                  \text{local state})
+            \\
+            \Downarrow
+            \\
+            & \frac {\partial c} {\partial \mathbf A^{\left[ L-1 \right]}} =
+                  b^{\left[ L-1 \right]}_A(
+                  \frac {\partial c} {\partial \mathbf A^{\left[ L \right]}}, 
+                  \text{local state})
+            \\
+            \Downarrow
+            \\
+            \dots
+            \\
+            \Downarrow
+            \\
+            & \frac {\partial c} {\partial \mathbf A^{\left[ 2 \right]}} =
+                  b^{\left[ 2 \right]}_A(
+                  \frac {\partial c} {\partial \mathbf A^{\left[ 3 \right]}}, 
+                  \text{local state})
+      \end{split}
+      \begin{split}
+            & \hspace{1 pc} \Rightarrow \hspace{1 pc}
+                  \frac {\partial c} {\partial \mathbf W^{\left[ L \right]}} =
+                  b^{\left[ L \right]}_W(
+                  \frac {\partial c} {\partial \mathbf A^{\left[ L + 1 \right]}}, 
+                  \text{local state})
+            \\
+            \\
+            & \hspace{1 pc} \Rightarrow \hspace{1 pc}
+                  \frac {\partial c}
+                        {\partial \mathbf W^{\left[ L-1 \right]}} =
+                  b^{\left[ L-1 \right]}_W(
+                  \frac {\partial c} {\partial \mathbf A^{\left[ L \right]}}, 
+                  \text{local state})
+            \\
+            \\
+            & \hspace{1 pc} \Rightarrow \hspace{1 pc}
+                  \frac {\partial c}
+                        {\partial \mathbf W^{\left[ L-2 \right]}} =
+                  b^{\left[ L-2 \right]}_W(
+                  \frac {\partial c} {\partial \mathbf A^{\left[ L-1 \right]}}, 
+                  \text{local state})
+            \\
+            \\
+            \\
+            \\
+            & \hspace{1 pc} \Rightarrow \hspace{1 pc}
+                  \frac {\partial c}
+                        {\partial \mathbf W^{\left[ 1 \right]}} =
+                  b^{\left[ 1 \right]}_W(
+                  \frac {\partial c} {\partial \mathbf A^{\left[ 2 \right]}}, 
+                  \text{local state})
+      \end{split}
+\end{align}
+$$
+<br><br><br>
+<br><br><br>
+<br><br><br>
+<br><br><br>
+
+### Illustration of Forward and Backward Passes
+The following diagram illustrates an FFNN's forward and backward passes:
+<br>
+
+$$
+\begin{align}
+      \begin{split}
+            \mathbf X = \mathbf A^{\left[ 1 \right]} \\
+            \\
+            \text{(FORWARD} \\
+            \text{PASS)} \\
+            \\ \\ \\ \\ \\ \\ \\ \\ \\
+      \end{split}
+      \begin{split}
+            \xrightarrow[(W^{\left[ 1 \right]})]{f^{\left[ 1 \right]}} \\
+            \\ \\ \\ \\ \\ \\ \\
+            \frac {\partial c}{\partial \mathbf W^{\left[ 1 \right]}} \\      
+            _{b^{\left[ 1 \right]}_W} \nwarrow \\
+            \\ \\
+      \end{split}
+      \begin{split}
+            \mathbf A^{\left[ 2 \right]} \\
+            \\
+            | \\
+            | \\
+            | \\
+            \text{layer} \\
+            \text{#} 1 \\
+            | \\
+            | \\
+            | \\
+            \\
+            \frac {\partial c}{\partial \mathbf A^{\left[ 2 \right]}}
+      \end{split}
+      \begin{split}
+            \xrightarrow[(W^{\left[ 2 \right]})]{f^{\left[ 2 \right]}} \\
+            \\ \\ \\ \\ \\ \\ \\
+            \frac {\partial c}{\partial \mathbf W^{\left[ 2 \right]}} \\      
+            _{b^{\left[ 2 \right]}_W} \nwarrow \\
+            \xleftarrow[b^{\left[ 2 \right]}_A]{ }
+      \end{split}
+      \begin{split}
+            \mathbf A^{\left[ 3 \right]} \\
+            \\
+            | \\
+            | \\
+            | \\
+            \text{layer} \\
+            \text{#} 2 \\
+            | \\
+            | \\
+            | \\
+            \\
+            \frac {\partial c}{\partial \mathbf A^{\left[ 3 \right]}}
+      \end{split}
+      \begin{split}
+            \xrightarrow[(W^{\left[ 3 \right]})]{f^{\left[ 3 \right]}} \\
+            \\ \\ \\ \\ \\ \\ \\
+            \frac {\partial c}{\partial \mathbf W^{\left[ 3 \right]}} \\ 
+            _{b^{\left[ 3 \right]}_W} \nwarrow \\
+            \xleftarrow[b^{\left[ 3 \right]}_A]{ }
+      \end{split}
+      \begin{split}
+            \dotsb
+            \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\
+            \dotsb
+            \\
+      \end{split}
+      \begin{split}
+            \xrightarrow[(W^{\left[ L-2 \right]})]{f^{\left[ L-2 \right]}} \\
+            \\ \\ \\ \\ \\ \\ \\
+            \frac {\partial c}{\partial \mathbf W^{\left[ L-2 \right]}} \\ 
+            _{b^{\left[ L-2 \right]}_W} \nwarrow \\
+            \xleftarrow[b^{\left[ L-2 \right]}_A]{ }
+      \end{split}
+      \begin{split}
+            \mathbf A^{\left[ L-1 \right]} \\
+            \\
+            | \\
+            | \\
+            | \\
+            \text{layer} \\
+            \text{#} (L-2) \\
+            | \\
+            | \\
+            | \\
+            \\
+            \frac {\partial c}{\partial \mathbf A^{\left[ L-1 \right]}}            
+      \end{split}
+      \begin{split}
+            \xrightarrow[(W^{\left[ L-1 \right]})]{f^{\left[ L-1 \right]}} \\
+            \\ \\ \\ \\ \\ \\ \\
+            \frac {\partial c}{\partial \mathbf W^{\left[ L-1 \right]}} \\
+            _{b^{\left[ L-1 \right]}_W} \nwarrow \\
+            \xleftarrow[b^{\left[ L-1 \right]}_A]{ }
+      \end{split}
+      \begin{split}
+            \mathbf A^{\left[ L \right]} \\
+            \\
+            | \\
+            | \\
+            | \\
+            \text{layer} \\
+            \text{#} (L-1) \\
+            | \\
+            | \\
+            | \\
+            \\
+            \frac {\partial c}{\partial \mathbf A^{\left[ L \right]}}            
+      \end{split}
+      \begin{split}
+            \xrightarrow[(W^{\left[ L \right]})]{f^{\left[ L \right]}} \\
+            \\ \\ \\ \\ \\ \\ \\
+            \frac {\partial c}{\partial \mathbf W^{\left[ L \right]}} \\
+            _{b^{\left[ L \right]}_W} \nwarrow \\
+            \xleftarrow[b^{\left[ L \right]}_A]{ }
+      \end{split}
+      \begin{split}
+            \mathbf A^{\left[ L + 1 \right]} \\
+            \\
+            | \\
+            | \\
+            | \\
+            \text{layer} \\
+            \text{#} L \\
+            | \\
+            | \\
+            | \\
+            \\
+            \frac {\partial c}{\partial \mathbf A^{\left[ L + 1 \right]}}            
+      \end{split}
+      \begin{split}
+            & = \mathbf H 
+                  \xrightarrow{ } \text{cost: } c(\mathbf H, \mathbf Y) \\
+            \\ \\ \\ \\ \\ \\ \\
+            & \text{(BACKWARD} \\
+            & \text{PASS)} \\
+            \\
+            & = \frac {\partial c}{\partial \mathbf H} =
+                  d(\mathbf H, \mathbf Y)
+      \end{split}
+\end{align}
+$$

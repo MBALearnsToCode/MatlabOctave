@@ -1,0 +1,49 @@
+---
+title: "Under-Fitting (High Bias) & Over-Fitting (High Variance) Problems"
+output: html_document
+---
+<br><br><br>
+
+*Under-Fitting Statement:*
+
+*Over-Fitting Statement:* 
+
+*STUFF TO KNOW BY HEART - EVEN WHEN DRUNK!*
+
+*1. FFNNs are **supervised** learning models*
+
+*2. **Cost functions** measure degree of prediction error*
+
+*3. **Training** is mathematical optimization that makes cost decrease*
+
+*4. An FFNN consists of **layers** of **transformation functions** and **weights***
+
+*5. FFNNs' **forward pass** models **hypothesized output***
+
+*6. FFNNs' **backward pass** computes **partial derivatives** of cost function with respect to weight layers, for use in mathematical optimization*
+
+
+<br><br><br>
+<br><br><br>
+
+### Input & Target Output
+Input: $\mathbf X$, Target Output: $\mathbf Y$
+<br><br><br>
+
+### Model Structure
+A neural network models hypothesized output $\mathbf H = h(\mathbf X , \mathbf W ^{\left[ 1 \right]}, \mathbf W ^{\left[ 2 \right]}, \dotsc, \mathbf W ^{\left[ L \right]})$ through $L$ layers of transformation functions and parameters (called "weights") in the following manner:
+
+$$
+\begin{align}
+      & \text{network layer 0: } \mathbf A^{\left[ 0 \right]} = \mathbf X \\     
+      & \text{network layer 1: } \mathbf A^{\left[ 1 \right]} =
+            f(\mathbf A^{\left[ 0 \right]}, \mathbf W^{\left[ 1 \right]}) \\
+      & \text{network layer 2: } \mathbf A^{\left[ 2 \right]} =
+            f(\mathbf A^{\left[ 1 \right]}, \mathbf W^{\left[ 2 \right]}) \\
+      & \dots \\
+      & \text{network layer } L \text{: } \mathbf A^{\left[ L \right]} =
+            f(\mathbf A^{\left[ L-1 \right]}, \mathbf W^{\left[ L \right]})
+\end{align}
+$$
+
+where:
