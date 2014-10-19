@@ -43,6 +43,7 @@ function [weightGrads costAvg_exclWeightPenalty ...
             convertText_toRegulFunc(weightRegulFunc);
       endif
    endfor
+   
 
    if isempty(targetOutputs_rowMats_args)
       bProp = false;
@@ -88,7 +89,7 @@ function [weightGrads costAvg_exclWeightPenalty ...
          toc / timeScale;
    
    endfor
-
+   
    % UPDATE HYPO OUTPUT
    % ------------------
    hypoOutput = activs{numTransforms + 1};
