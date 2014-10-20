@@ -1,5 +1,6 @@
 function m = updateLayer(rbm, layerToUpdate = 'vis', ...
-   otherLayer_rowMat, sample = true)
+   otherLayer_rowMat, sample = true, ...
+   useRandSource = false, randSource_Mat = [])
 
    weights = rbm.weights;
    
@@ -22,18 +23,20 @@ function m = updateLayer(rbm, layerToUpdate = 'vis', ...
             m = zeros([rows(signal) (numPartitions * s)]);
             for (p = 1 : numPartitions)
                partition_vec = ((p - 1) * s + 1) : (p * s);
-               probs = func_output...
+               probs_rowMat = func_output...
                   (signal(:, partition_vec), false).val;
                if (sample)   
-                  m(:, partition_vec) = sampleSoftmax(probs);
+                  m(:, partition_vec) = sampleSoftmax...
+                     (probs_rowMat, ...
+                     useRandSource, randSource_Mat);
                else
-                  m(:, partition_vec) = probs;
+                  m(:, partition_vec) = probs_rowMat;
                endif
             endfor
          else
             m = func_output(signal, false).val;
             if (sample)
-               m = sampleBern(m);
+               m = sampleBern(m, useRandSource, randSource_Mat);
             endif
          endif     
       
@@ -47,7 +50,7 @@ function m = updateLayer(rbm, layerToUpdate = 'vis', ...
          signal = func_signal(otherLayer_rowMat, weights');
          m = func_output(signal, false).val;  
          if (sample)
-            m = sampleBern(m);
+            m = sampleBern(m, useRandSource, randSource_Mat);
          endif
          
    endswitch

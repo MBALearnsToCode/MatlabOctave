@@ -9,7 +9,6 @@ function ret = cd1(rbm_w, visible_data)
 
     
     visible_data = sample_bernoulli(visible_data);
-
     
     positivePhase = negativePhase = 0;
     v0 = visible_data;
