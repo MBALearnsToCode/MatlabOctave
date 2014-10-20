@@ -1,5 +1,9 @@
-function m = goodnessAvg(rbm, hid_rowMat, vis_rowMat)
+function m = goodnessAvg(rbm, hid_rowMat = [], vis_rowMat)
 
+   if isempty(hid_rowMat)
+      hid_rowMat = updateLayer(rbm, 'hid', vis_rowMat, false);
+   endif
+   
    m = trace...
       ((addBiasElems(hid_rowMat, rbm.addBiasHid) ...
       * rbm.weights) ...
