@@ -1,14 +1,22 @@
 function f = rmBiasElems...
-   (Mat, num = 1, col_or_row = 'row')
-
-   switch (col_or_row)
-
-      case ('col')
-         f = Mat(:, (num + 1) : end);
-
+   (Mat, nums = [1], firstCol_orRow = 'row')
+   
+   f = Mat;
+   
+   switch (firstCol_orRow)
+   
       case ('row')
-         f = Mat((num + 1) : end, :);
+         f = f((nums(1) + 1) : end, :);
+         if (length(nums) > 1)
+            f = f(:, (nums(2) + 1) : end);
+         endif
+         
+      case ('col')
+         f = f(:, (nums(1) + 1) : end);
+         if (length(nums) > 1)
+            f = f((nums(2) + 1) : end, :);        
+         endif
 
    endswitch
 
-end
+endfunction

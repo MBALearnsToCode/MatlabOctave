@@ -1,4 +1,4 @@
-function f = loadFile_rbm(loadFileName)
+function f = rbm_loadFile(loadFileName)
 
    f = load(loadFileName).rbm_file;
    

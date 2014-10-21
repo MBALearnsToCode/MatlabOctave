@@ -1,4 +1,4 @@
-function f = loadFile_ffNN(loadFileName)
+function f = ffNN_loadFile(loadFileName)
 
    f = load(loadFileName).ffNN_file;
    for (l = 1 : f.numTransforms)
