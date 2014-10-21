@@ -126,7 +126,7 @@ function [ffNN_updated ...
       * trainCostApproxChunk_numBatches;
     
    overview(ffNN_updated);
-fprintf('\n\nTRAIN FORWARD-FEEDING NEURAL NETWORK (METHOD: RMSPROP):\n\n');
+fprintf('\n\nTRAIN FORWARD-FEEDING NEURAL NETWORK (FFNN) (METHOD: RMSPROP):\n\n');
    fprintf('   DATA SETS:\n');
    fprintf('      Training: %i cases\n', ...
       size(trainTargetOutput, 1));
