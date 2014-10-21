@@ -47,14 +47,7 @@ function f = partitionData...
    numTrainCases = numBatches * batchSize;
    f.trainBatchDim = numDims + 1;   
    f.train = arrOpAcrossDim(dataArr_shuff, 'subset', ...
-      1 : numTrainCases, casesDim);
-   
-   %%%%%%%%%%%%%%%%%%%%%%%%%%
-   % fprintf('partitionData:\n')
-   % f.train
-   % batchSize
-   % casesDim
-   %%%%%%%%%%%%%%%%%%%%%%%%%   
+      1 : numTrainCases, casesDim);  
    
    f.train_batches = arrOpAcrossDim(f.train, 'split', ...
       batchSize, casesDim);
