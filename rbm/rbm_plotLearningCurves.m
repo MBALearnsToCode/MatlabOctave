@@ -8,11 +8,11 @@ function f = rbm_plotLearningCurves...
 
    clf;
    hold on;
-   title('LEARNING CURVES');
+   title('LEARNING CURVES (Restricted Boltzmann Machine)');
 xlabel(sprintf('%i CHUNKS (1 Chunk = %i Batches, 1 Batch = %i Cases) | elapsed: %.3gm', ...
       chunkNum, trainGoodnessApproxChunk_numBatches, ...
       trainBatchSize, trainElapsedTime_numMins));
-   ylabel('Avg Goodnesses (excl Weight Penalty)');
+   ylabel('Avg GOODNESS (excl Weight Penalty)');
    plot(trainGoodnessesAvg_exclWeightPenalty_approx, 'b');
    plot(validGoodnessesAvg_exclWeightPenalty_0asNA, ...
       '.', 'color', 'r', 'markersize', 9);

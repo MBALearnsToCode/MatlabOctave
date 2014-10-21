@@ -9,11 +9,11 @@ function f = ffNN_plotLearningCurves...
 
    clf;
    hold on;
-   title('LEARNING CURVES');
+   title('LEARNING CURVES (Forward-Feeding Neural Network)');
 xlabel(sprintf('%i CHUNKS (1 Chunk = %i Batches, 1 Batch = %i Cases) | elapsed: %.3gm', ...
       chunkNum, trainCostApproxChunk_numBatches, batchSize, ...
       trainElapsedTime_numMins));
-   ylabel('Avg Costs (excl Weight Penalty)');
+   ylabel('Avg COST (excl Weight Penalty)');
    plot(trainCostsAvg_exclWeightPenalty_approx, 'b');
    plot(validCostsAvg_exclWeightPenalty_0asNA, ...
       '.', 'color', 'r', 'markersize', 9);
