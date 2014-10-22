@@ -266,7 +266,7 @@ fprintf('\r      Epoch %i Batch %i (CD-%i): TRAIN %.3g, VALID %.3g, elapsed %.3g
             endif
                
             trainCostAvg_exclWeightPenalty_currChunk = ...
-               trainAccuracyAvg_currChunk = batch_inChunk = 0;  
+               batch_inChunk = 0;  
  
             if (batch == trainNumBatches)         
                chunk_inEpoch = 0;
