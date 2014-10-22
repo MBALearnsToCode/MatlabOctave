@@ -124,7 +124,9 @@ function [ffNN_updated ...
    validCostCalcInterval_numBatches = ...
       validCostCalcInterval_numChunks ...
       * trainCostApproxChunk_numBatches;
-    
+   
+   saveFileName_upper = upper(saveFileName);
+  
    overview(ffNN_updated);
 fprintf('\n\nTRAIN FORWARD-FEEDING NEURAL NETWORK (FFNN) (METHOD: RMSPROP):\n\n');
    fprintf('   DATA SETS:\n');
@@ -188,8 +190,8 @@ fprintf('      Training Batches per Epoch: %i batches of %i', ...
    if (bestStop)
 fprintf('      Model Selection by Best Validation Performance\n');
    endif
-   fprintf('      Saving Results in "%s" on Working Directory every %i Minutes\n', ...
-      saveFileName, saveEvery_numMins);
+   fprintf('      Saving Results in %s on Working Directory every %i Minutes\n', ...
+      saveFileName_upper, saveEvery_numMins);
    fprintf('\n');
    fprintf('   TRAINING PROGRESS:\n');
 % fprintf(cstrcat('      (pre-terminate by "', zzzBORED, '" key stroke)\n'));

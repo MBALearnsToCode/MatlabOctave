@@ -9,11 +9,13 @@ function model = optimize(model_shape, gradient_function, training_data, learnin
     mini_batch_size = 100;
     start_of_next_mini_batch = 1;
     for iteration_number = 1:n_iterations,
+        fprintf('\rIter #%i', iteration_number);
         mini_batch = extract_mini_batch(training_data, start_of_next_mini_batch, mini_batch_size);
         start_of_next_mini_batch = mod(start_of_next_mini_batch + mini_batch_size, size(training_data.inputs, 2));
         gradient = gradient_function(model, mini_batch);
         momentum_speed = 0.9 * momentum_speed + gradient;
         model = model + momentum_speed * learning_rate;
     end
+    fprintf('\n');
 end
 

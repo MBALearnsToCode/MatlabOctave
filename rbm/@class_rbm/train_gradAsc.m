@@ -34,7 +34,11 @@ function [rbm_updated ...
       validGoodnessesAvg_exclWeightPenalty = [];
    
    trainData = dataArgs_list{1};
-   validData = dataArgs_list{2};
+   if (length(dataArgs_list) > 1)
+      validData = dataArgs_list{2};
+   else
+      validData = [];
+   endif
    if (trainRandShuff)
       trainData = arrOpAcrossDim(trainData, 'shuffle');
    endif
@@ -82,6 +86,8 @@ function [rbm_updated ...
          cd_chainLengths(i);
    endfor
    
+   saveFileName_upper = upper(saveFileName);
+   
    overview(rbm_updated);      
 fprintf('TRAIN RESTRICTED BOLTZMANN MACHINE (RBM) (METHOD: GRADIENT ASCENT):\n\n'); 
    fprintf('   DATA SETS:\n');
@@ -94,7 +100,7 @@ fprintf('TRAIN RESTRICTED BOLTZMANN MACHINE (RBM) (METHOD: GRADIENT ASCENT):\n\n
    fprintf('\n   TRAINING SETTINGS:\n');   
    fprintf('      Training Epochs: %s\n', ...
       mat2str(trainNumsEpochs));
-   fprintf('         w/ Constrastive Divergence Markov Chain Lengths %s\n', ...
+   fprintf('         w/ Constrastive Divergence Markov Chain Lengths: %s\n', ...
       mat2str(cd_chainLengths));
 fprintf('      Training Batches per Epoch: %i batches of %i', ...
       trainNumBatches, trainBatchSize);
@@ -123,8 +129,8 @@ fprintf(',   applying Nesterov Accelerated Gradient (NAG)\n');
 fprintf('      Model Selection by Best Validation Performance\n');
    endif
    
-   fprintf('      Saving Results in "%s" on Working Directory every %i Minutes\n', ...
-      saveFileName, saveEvery_numMins);
+   fprintf('      Saving Results in %s on Working Directory every %i Minutes\n', ...
+      saveFileName_upper, saveEvery_numMins);
       
    fprintf('\n');
    
@@ -170,7 +176,7 @@ fprintf('      Validation Avg Cost (excl Weight Penalty) updated every %i batche
             useRandSource, randSource_Mat);
          if (weightRegulParam)
             weightGrads -= weightRegulParam ...
-               * weightRegulFunc(rbm.weights, ...
+               * weightRegulFunc(rbm_temp.weights, ...
                [addBiasHid addBiasVis], true).grad;
          endif
             
