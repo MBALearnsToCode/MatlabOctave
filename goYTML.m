@@ -5,12 +5,8 @@
 % 4. Set working directory
 % 5. Add folders to the search path
 
+addpath(genpath(pwd()));
 warningSettings;
-
-PS1('CMD>>>   '); clear; close all; clc;
-
-cd 'D:\Cloud\Dropbox\MBALearnsToCode\youTeach.machineLearn';
-addpath(genpath...
-   ('D:\Cloud\Dropbox\MBALearnsToCode\youTeach.machineLearn'));
-
+PS1('CMD>>>   ');
 more off;
+clear; close all; clc;
