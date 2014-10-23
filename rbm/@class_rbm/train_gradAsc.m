@@ -159,11 +159,7 @@ fprintf('      Validation Avg Cost (excl Weight Penalty) updated every %i batche
               (trainData_batches, batch);            
          else
             trainData_batch = trainData_batches;
-         endif
-         
-         trainGoodnessAvg_exclWeightPenalty_currBatch = ...
-            goodnessAvg(rbm_updated, [], trainData_batch, ...
-            trainBatchDim);
+         endif        
             
          rbm_temp = rbm_updated;
          if (momentumRate) && (nesterovAccGrad)            
@@ -192,6 +188,9 @@ fprintf('      Validation Avg Cost (excl Weight Penalty) updated every %i batche
                learningRate * weightGrads;
          endif
          
+         trainGoodnessAvg_exclWeightPenalty_currBatch = ...
+            goodnessAvg(rbm_updated, [], trainData_batch, ...
+            trainBatchDim);
          batch_inChunk++;         
          trainGoodnessAvg_exclWeightPenalty_currChunk += ...
             (trainGoodnessAvg_exclWeightPenalty_currBatch ...

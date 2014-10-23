@@ -5,9 +5,6 @@ function [costAvg accuracyAvg] = costAvg_exclWeightPenalty...
    
    numBatches = max(size(input_batches, batchDim), ...
       size(targetOutputs_batches, batchDim));
-   % take the MAX because the last dimension of 
-   % the array with more dimensions would correspond to
-   % the batch dimension
    
    if (numBatches == 1)     
       [~, costAvg, ~, ~, accuracyAvg] = fProp_bProp(ffNN, ...
