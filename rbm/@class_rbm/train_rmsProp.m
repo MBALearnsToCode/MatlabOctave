@@ -64,14 +64,14 @@ function [rbm_updated ...
       trainBatchSize = size(trainData, 1);
       trainData_batches = trainData;
    endif
-   trainBatchDim = max(batchDim, ...
-      arrNumDims(trainData_batches));
+   trainBatchDim = max([batchDim ...
+      arrNumDims(trainData_batches)]);
    trainNumBatches = size(trainData_batches, trainBatchDim);
 
    valid_provided = ~isempty(validData);
    validProvided_n_bestStop = valid_provided && bestStop;
    if (valid_provided)
-      validBatchDim = max(batchDim, arrNumDims(validData));
+      validBatchDim = max([batchDim arrNumDims(validData)]);
    endif
    if (validProvided_n_bestStop)
       rbm_best = rbm_updated;

@@ -1,4 +1,4 @@
-# Created by Octave 3.8.2, Fri Oct 24 13:44:28 2014 Central Daylight Time <unknown@MyPC>
+# Created by Octave 3.8.2, Fri Oct 24 14:57:12 2014 Central Daylight Time <unknown@MyPC>
 # name: ffNN_file
 # type: class
 # classname: class_ffNN
@@ -107,9 +107,9 @@ linear
 # type: matrix
 # rows: 3
 # columns: 1
- 215810.6167913787
- 61384.03125186081
- 20273.55045337883
+ 340412.6595607437
+ 110631.008175489
+ -6649.432167462721
 
 
 

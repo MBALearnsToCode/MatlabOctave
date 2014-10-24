@@ -11,4 +11,4 @@ function f = addBiasElems...
 
    endswitch
 
-end
+endfunction
