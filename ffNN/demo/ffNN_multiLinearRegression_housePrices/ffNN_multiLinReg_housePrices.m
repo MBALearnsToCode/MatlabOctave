@@ -1,5 +1,5 @@
 function ffNN_multiLinReg_housePrices...
-   (learningRate = 0.3, numIters = 3, numEpochs = 10)
+   (learningRate = 0.3, numIters = 1, numEpochs = 10)
 
    % load House Prices data
    data = load('housePrices.txt');
@@ -41,8 +41,8 @@ function ffNN_multiLinReg_housePrices...
       trainRandShuff = false, ...
       trainCostApproxChunk_numBatches = 1, ...
       validCostCalcInterval_numChunks = 1, ... 
-      weightRegulArgs_list = {{'L2'} [0]});
-   
+      weightRegulArgs_list = {{'L2'} [0]});  
+      
    weights = ffNN.weights;
    fprintf('Linear Regression Coefficients (neural net solution on normalized features):\n');
    weights_ffNN = weights{1}
@@ -59,6 +59,6 @@ function ffNN_multiLinReg_housePrices...
       predict(ffNN, normalizeMeanSd...
       ([testArea testNumBedrooms], mu, sigma)));
    
-   fprintf('\n');
+   fprintf('\n');   
    
 endfunction
