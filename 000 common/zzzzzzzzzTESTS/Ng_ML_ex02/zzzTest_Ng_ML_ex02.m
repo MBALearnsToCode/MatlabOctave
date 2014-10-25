@@ -26,7 +26,7 @@ clear ; close all; clc
 
 data = load('ex2data2.txt');
 X = data(:, [1, 2]); y = data(:, 3);
-
+X
 plotData(X, y);
 
 % Put some labels 
@@ -56,10 +56,8 @@ hold off;
 % Note that mapFeature also adds a column of ones for us, so the intercept
 % term is handled
 X = mapFeature(X(:,1), X(:,2));
- X(1:10,1:5)
-columns(X)
- fprintf('\nProgram paused. Press enter to continue.\n');
- pause;
+ %fprintf('\nProgram paused. Press enter to continue.\n');
+ %pause;
 
 
 % Initialize fitting parameters
@@ -72,9 +70,9 @@ lambda = 1;
 % regression
 [cost, grad] = costFunctionReg(initial_theta, X, y, lambda);
 
-fprintf('Cost at initial theta (zeros): %f\n', cost);
+%fprintf('Cost at initial theta (zeros): %f\n', cost);
 
-fprintf('\nProgram paused. Press enter to continue.\n');
+%fprintf('\nProgram paused. Press enter to continue.\n');
 %pause;
 
 %% ============= Part 2: Regularization and Accuracies =============
@@ -100,7 +98,7 @@ options = optimset('GradObj', 'on', 'MaxIter', maxNumIters);
 % Optimize
 [theta, J, exit_flag] = ...
 	fminunc(@(t)(costFunctionReg(t, X, y, lambda)), initial_theta, options);
-
+theta
 % Plot Boundary
 plotDecisionBoundary(theta, X, y);
 hold on;
@@ -129,12 +127,31 @@ initial_theta = zeros(size(X, 2), 1);
 X = X(:, 2:end);
 % NEURAL NET
 % ----------
-ffNN = ffNN_new(27, [], {'logistic'}, true, false);
-ffNN = ffNN_train(X, ffNN, y, maxNumIters, ...
-   lambda, {}, false, @fminunc, 0, false);
+ffNN = class_ffNN...
+      (inputDimSizes_perCase_vec = 27, ...
+      addlLayersNumsNodes_vec = [], ...
+      transformFuncs_list = {'logistic'}, ...
+      displayOverview = false, ...
+      initWeights_rand = false);
 
-J_ffNN = ffNN.costAvg_wRegul;
-theta_ffNN = ffNN.params{2};
+ffNN = train_gradDesc...
+      (ffNN_init = ffNN, ...
+      dataArgs_list = {X y 1.0}, ...
+      targetOutputs_areClassIndcsColVecs = false, ...
+      trainNumEpochs = 300, ...
+      trainBatchSize = false, ...   
+      trainRandShuff = false, ...
+      trainCostApproxChunk_numBatches = 1, ...
+      validCostCalcInterval_numChunks = 1, ...
+      learningRate_init = 0.3, ...
+      momentumRate_init = 0, ...
+      nesterovAccGrad = true, ...
+      weightRegulArgs_list = {{'L2'} [lambda]}, ...
+      connectProbs = [1.0], bestStop = false);
+
+[~, ~, J_ffNN] = fProp_bProp(ffNN, X, y, false, ...
+   {{'L2'} [lambda]}, false);
+theta_ffNN = ffNN.weights{1};
 
 [J J_ffNN]
 equalTest(J, J_ffNN)

@@ -32,6 +32,14 @@ if input('run? (1/0) = ')
 endif
 fprintf('\n');
 
+% NG Machine Learning: Ex02
+% -------------------------
+fprintf('TESTING: NG Machine Learning: Ex02 (LOGISTIC REGRESSION)\n');
+if input('run? (1/0) = ')
+   zzzTest_Ng_ML_ex02;
+endif
+fprintf('\n');
+
 % zzzTest_evalClassif
 % -------------------
 fprintf('TESTING: zzzzzzTest_evalClassif\n');
@@ -71,14 +79,7 @@ fprintf('\n');
 
 
 
-% NG Machine Learning: Ex02
-% -------------------------
-fprintf('TESTING: NG Machine Learning: Ex02\n');
-if input('run? (1/0) = ')
-   cd 'D:\Cloud\Box Sync\GitHub\MBALearnsToCode\MatlabOctave\zzzzzzzzzDEMOS\NG - Machine Learning\ex02'
-   zzzTest_Ng_ML_ex02;
-endif
-fprintf('\n');
+
 
 
 % NG Machine Learning: Ex03

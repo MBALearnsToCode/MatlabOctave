@@ -9,4 +9,4 @@ addpath(genpath(pwd()));
 warningSettings;
 PS1('CMD>>>   ');
 more off;
-clear; close all; clc;
+close all; clc;

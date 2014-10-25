@@ -172,9 +172,11 @@ fprintf('      Training Avg Goodness (excl Weight Penalty) approx''d w/ each chu
       trainGoodnessApproxChunk_numBatches);
 fprintf('      Validation Avg Goodness (excl Weight Penalty) updated every %i batches\n', ...
       validGoodnessCalcInterval_numBatches);
-      
-   lastSaveTime = trainStartTime = time;
    
+   if (plotLearningCurves)
+      figure;
+   endif   
+   lastSaveTime = trainStartTime = time;   
    for (epoch = 1 : trainNumEpochs)
       
       if (trainRandShuff) && (trainNumBatches > 1) && ...
@@ -291,7 +293,7 @@ fprintf('\r      Epoch %i Batch %i (CD-%i): TRAIN %.3g, VALID %.3g, elapsed %.3g
                validGoodnessAvg_exclWeightPenalty, ...
                trainElapsedTime_numMins);
             
-            if (plotLearningCurves)
+            if (plotLearningCurves)               
                rbm_plotLearningCurves...
             (trainGoodnessAvg_exclWeightPenalty_currChunk, ...                  
                trainGoodnessesAvg_exclWeightPenalty_approx, ...   

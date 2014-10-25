@@ -173,6 +173,9 @@ fprintf('      Validation Avg Cost (excl Weight Penalty) updated every %i batche
 fprintf('         (Est Avg Classification Accuracy %%s in brackets)\n');
    endif
    
+   if (plotLearningCurves)
+      figure;
+   endif
    lastSaveTime = trainStartTime = time;
    
    for (epoch = 1 : trainNumEpochs)
@@ -327,7 +330,7 @@ fprintf('\r      Epoch %i Batch %i: TRAIN %.3g%s, VALID %.3g%s, elapsed %.3gm   
                validAccuracyAvg_text, ...
                trainElapsedTime_numMins);
             
-            if (plotLearningCurves)
+            if (plotLearningCurves)               
                ffNN_plotLearningCurves...
                   (trainCostAvg_exclWeightPenalty_currChunk, ...
                   trainAccuracyAvg_text, ...
