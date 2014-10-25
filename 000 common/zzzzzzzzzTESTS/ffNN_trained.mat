@@ -1,0 +1,147 @@
+# Created by Octave 3.8.2, Sat Oct 25 14:35:41 2014 Central Daylight Time <unknown@MyPC>
+# name: ffNN_file
+# type: class
+# classname: class_ffNN
+# length: 7
+# name: costFuncType
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 4
+CE-L
+
+
+
+
+
+# name: inputDimSizes_perCase
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar
+27
+
+
+
+
+
+# name: numTransforms
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar
+1
+
+
+
+
+
+# name: numWeights
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar
+28
+
+
+
+
+
+# name: transformFuncs
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 8
+logistic
+
+
+
+
+
+
+
+
+# name: weightDimSizes
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: matrix
+# rows: 1
+# columns: 2
+ 28 1
+
+
+
+
+
+
+
+
+# name: weights
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: matrix
+# rows: 28
+# columns: 1
+ 1.676441000377472
+ 0.9730613193464114
+ 1.687532317691302
+ -2.587353027707332
+ -1.515452863430215
+ -2.043040936211707
+ 0.276685495718997
+ -0.5888757490417165
+ -0.5230113818635613
+ -0.1843294518455154
+ -2.069280646233649
+ -0.01277811813212953
+ -0.9410156834573402
+ -0.4839087621612446
+ -1.666199989145383
+ -0.3123048119970829
+ -0.3003656029719187
+ -0.002372828807893825
+ -0.4494759456976508
+ -0.5005751417125283
+ -0.4790315657584924
+ -1.479113844761201
+ 0.08676341309096403
+ -0.4293051206185568
+ 0.0554373801010165
+ -0.5055317348301965
+ -0.2857380532056417
+ -1.166082033434747
+
+
+
+
+
+
+
+
+
+

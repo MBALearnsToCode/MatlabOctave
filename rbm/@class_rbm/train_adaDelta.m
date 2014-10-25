@@ -135,6 +135,7 @@ fprintf('TRAIN RESTRICTED BOLTZMANN MACHINE (RBM) (METHOD: ADADELTA):\n\n');
       mat2str(cd_chainLengths));
 fprintf('      Training Batches per Epoch: %i batches of %i', ...
       trainNumBatches, trainBatchSize);
+   trainRandShuff = trainRandShuff && (trainNumBatches > 1);
    if (trainRandShuff)
       fprintf(', shuffled in each epoch\n')
    else
@@ -157,7 +158,7 @@ fprintf('      Training Batches per Epoch: %i batches of %i', ...
       weightRegulFunc, weightRegulParam);   
    weightRegulFunc = convertText_toRegulFunc(weightRegulFunc);
    
-   if (bestStop)
+   if (validProvided_n_bestStop)
 fprintf('      Model Selection by Best Validation Performance\n');
    endif
    
@@ -179,8 +180,7 @@ fprintf('      Validation Avg Goodness (excl Weight Penalty) updated every %i ba
    lastSaveTime = trainStartTime = time;   
    for (epoch = 1 : trainNumEpochs)
       
-      if (trainRandShuff) && (trainNumBatches > 1) && ...
-         (epoch > 1)               
+      if (trainRandShuff) && (epoch > 1)               
          trainData = arrOpAcrossDim(trainData, 'shuffle');
          trainData_batches = arrOpAcrossDim...
             (trainData, 'split', trainBatchSize);         

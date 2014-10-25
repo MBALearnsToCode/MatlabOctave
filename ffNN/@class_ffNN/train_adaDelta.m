@@ -142,6 +142,7 @@ fprintf('\n\nTRAIN FORWARD-FEEDING NEURAL NETWORK (FFNN) (METHOD: ADADELTA):\n\n
    fprintf('      Training Epochs: %i\n', trainNumEpochs); 
 fprintf('      Training Batches per Epoch: %i batches of %i', ...
       trainNumBatches, batchSize);
+   trainRandShuff = trainRandShuff && (trainNumBatches > 1);
    if (trainRandShuff)
       fprintf(', shuffled in each epoch\n')
    else
@@ -186,7 +187,7 @@ fprintf('      Training Batches per Epoch: %i batches of %i', ...
          weightRegulParam_print);
    endfor
    
-   if (bestStop)
+   if (validProvided_n_bestStop)
 fprintf('      Model Selection by Best Validation Performance\n');
    endif
    
@@ -212,8 +213,7 @@ fprintf('         (Est Avg Classification Accuracy %%s in brackets)\n');
    
    for (epoch = 1 : trainNumEpochs)
       
-      if (trainRandShuff) && (trainNumBatches > 1) && ...
-         (epoch > 1)
+      if (trainRandShuff) && (epoch > 1)
          train_reshuffled = setTrainValidTestData...
             ({trainInput trainTargetOutput 1.0}, ...
             batchSize, trainRandShuff);
