@@ -18,7 +18,7 @@ function ffNN_multiLinReg_housePrices...
    coeffs_analytic = linRegWeights_analytic(y, X);
    
    % Normalize scales of features for better convergence
-   [X_norm mu sigma] = normalizeMeanSd(X);
+   [X_norm mu sigma] = normalizeSubtractDivide(X);
    fprintf('\nLinear Regression Coefficients (analytic solution on normalized features):\n');   
    coeffs_analyticNormalized = linRegWeights_analytic(y, X_norm)
    
@@ -30,8 +30,8 @@ function ffNN_multiLinReg_housePrices...
       transformFuncs_list = {'linear'}, ...
       displayOverview = false, ...
       initWeights_rand = false);
-   ffNN.preProcess_subtract = mu;
-   ffNN.preProcess_divide = sigma;
+   ffNN.normalizeSubtract = mu;
+   ffNN.normalizeDivide = sigma;
    
    ffNN = train_gradDesc...
       (ffNN_init = ffNN, ...

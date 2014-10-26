@@ -2,7 +2,7 @@ function m = initWeights(ffNN, sigma_or_epsilon = 1e-3, ...
    distrib = 'normal')
    
    m = ffNN;
-
+   
    switch (distrib)
 
       case ('normal')
