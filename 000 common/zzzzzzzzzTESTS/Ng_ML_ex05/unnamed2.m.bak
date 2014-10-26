@@ -1,6 +1,0 @@
-function f = sumEveryNthElemAlongMatDim(Mat, n, ...
-   alongDimNum = 1)
-   
-   
-   
-end
