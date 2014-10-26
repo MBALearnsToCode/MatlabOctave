@@ -1,15 +1,14 @@
 function f = evalClassif...
-   (predClasses_Arr, targetClasses_Arr, detectBin = true)
+   (predClasses_Arr, targetClasses_Arr, detectBin = true)   
    
    predClasses_no0_colVec = ...
-      convertBinClassIndcs(predClasses_Arr(:), 0, 2);
+      convertBinClassIndcs(predClasses_Arr(:), 0, 2);   
    targetClasses_no0_colVec = ...
-      convertBinClassIndcs(targetClasses_Arr(:), 0, 2); 
+      convertBinClassIndcs(targetClasses_Arr(:), 0, 2);
    K = f.numClasses = numClasses = ...
       max([predClasses_no0_colVec; targetClasses_no0_colVec]);
    f.numElems = numElems = ...
       length(targetClasses_no0_colVec);
-      
    confusionMat = zeros(numClasses);
    for (i = 1 : numClasses)
       for (j = 1 : numClasses)

@@ -4,4 +4,4 @@
 warning('off', 'Octave:single-quote-string');
 warning('off', 'Octave:separator-insert');
 warning('off', 'Octave:possible-matlab-short-circuit-operator');
-warning ('error', 'Octave:divide-by-zero');
+warning('off', 'Octave:divide-by-zero');

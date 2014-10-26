@@ -1,0 +1,174 @@
+# Created by Octave 3.8.2, Sat Oct 25 17:32:08 2014 Central Daylight Time <unknown@MyPC>
+# name: ffNN_file
+# type: class
+# classname: class_ffNN
+# length: 7
+# name: costFuncType
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 4
+CE-L
+
+
+
+
+
+# name: inputDimSizes_perCase
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar
+54
+
+
+
+
+
+# name: numTransforms
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar
+1
+
+
+
+
+
+# name: numWeights
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar
+55
+
+
+
+
+
+# name: transformFuncs
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 8
+logistic
+
+
+
+
+
+
+
+
+# name: weightDimSizes
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: matrix
+# rows: 1
+# columns: 2
+ 55 1
+
+
+
+
+
+
+
+
+# name: weights
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: matrix
+# rows: 55
+# columns: 1
+ 13.57191316365007
+ 31.12485078255154
+ 21.30839889446434
+ -94.90483547860745
+ -7.623360817296453
+ -33.91338361841221
+ -167.9071874068385
+ -53.46235185711453
+ -207.5321762085135
+ -98.08074722701468
+ 229.3198117207387
+ 239.4634841383816
+ 241.6548860602898
+ -76.44855189536368
+ -45.41543731306977
+ 106.0987232040208
+ 64.20681711729029
+ 845.1152339170296
+ 63.18445933774208
+ 387.7079231561856
+ 238.8092263110696
+ 23.16202187330936
+ -912.1434024389087
+ -284.8524578967788
+ 290.6561443290207
+ -138.5154670850785
+ -313.0434413744211
+ 165.5182262728074
+ 378.8968937264489
+ 52.22721429672639
+ -42.51762711372232
+ 83.74749189491006
+ -1031.065973713945
+ 372.491188292594
+ 474.0267096889189
+ -178.0711240746743
+ -577.7883118504852
+ 514.1864816488666
+ -223.5126461876908
+ -739.4221030009729
+ -545.3518338855687
+ 312.8312750872308
+ -408.7538042918792
+ 125.2663124309653
+ -275.6946982183135
+ -159.060798343381
+ 275.8164685470981
+ 332.4443127101902
+ 77.06962788331646
+ -1320.202186065205
+ -35.40450370159117
+ 274.1333688228758
+ -78.46628558474571
+ -584.2591556645925
+ 171.504427118128
+
+
+
+
+
+
+
+
+
+
