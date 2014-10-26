@@ -1,8 +1,7 @@
 function ffNN = ffNN_learnDigits(numsHid = [300 100], ...
-   weightPenaltyTerm = 0, numEpochs = 30, ...
-   numIters_perBatch = 10); 
+   weightPenaltyTerm = 0, numEpochs = 30, numIters_perBatch = 9); 
    
-   fresh;
+   close all;
    
    % load data
    [trainInput trainTargetOutput ...
@@ -16,7 +15,7 @@ function ffNN = ffNN_learnDigits(numsHid = [300 100], ...
    % display random sample labels & images
    numDisplaySamples = 100;
    displaySamples_numRowsCols = sqrt(numDisplaySamples);
-   randDisplaySamples = randperm(m, numDisplaySamples);
+   randDisplaySamples = 1 : 100;
    
    [~, displayLabels] = max...
       (trainTargetOutput(randDisplaySamples, :), [], 2);
@@ -28,18 +27,23 @@ function ffNN = ffNN_learnDigits(numsHid = [300 100], ...
       (permute(trainInput(randDisplaySamples, :, :), [2 3 1]));
    
    
-   % create Forward-Feeding Neural Network (FFNN)
+   % create Forward-Feeding Neural Network (FFNN):
+   % all layers are Logistic transformation layers
+   % with the top layer automatically set as 
+   % a 10-way Softmax layer
    ffNN = class_ffNN...
       (inputDimSizes_perCase = 256, ...
       addlLayersNumsNodes = [numsHid 10], ...
-      transformFuncs = {'logistic'}, ...
+      transformFuncs = {}, ...
       displayOverview = false, ...
       initWeights = true);
-      
+   
+   
    % reshape data to fit model's architecture
-   trainInput = reshape(trainInput, [9000 256]);
-   validInput = reshape(validInput, [1000 256]);
-   testInput = reshape(testInput, [1000 256]);
+   trainInput = trainInput(:, :);
+   validInput = validInput(:, :);
+   testInput = testInput(:, :);
+
    
    % train FFNN with CONJUGATE GRADIENT
    ffNN = train_conjGrad...
@@ -57,5 +61,21 @@ function ffNN = ffNN_learnDigits(numsHid = [300 100], ...
       weightRegulArgs = {{'L2'} [weightPenaltyTerm]}, ...
       connectProbs = [1.0], ...
       bestStop = true);
+
       
+   % visualize learned 1st-layer weights
+   % to see what detected features are like;
+   % we will see many features detecting strokes
+   % and hooks, which are relevant in distinguishing
+   % one digit from another
+   weights = ffNN.weights;
+   weights_layer1 = weights{1};
+   % for visualization purposes, we ignore bias terms
+   weights_layer1 = rmBiasElems(weights_layer1);
+   % reshape weights for visualization
+   weights_layer1 = permute(reshape(weights_layer1', ...
+      [numsHid(1) imgHeight imgWidth]), [2 3 1]);
+   % visualize weights
+   plot2D_grayImages(weights_layer1);   
+   
 endfunction

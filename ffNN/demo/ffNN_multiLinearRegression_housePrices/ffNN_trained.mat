@@ -1,8 +1,8 @@
-# Created by Octave 3.8.2, Sat Oct 25 15:28:45 2014 Central Daylight Time <unknown@MyPC>
+# Created by Octave 3.8.2, Sun Oct 26 14:04:36 2014 Central Daylight Time <unknown@WIN-A1IUAI5TB9H>
 # name: ffNN_file
 # type: class
 # classname: class_ffNN
-# length: 7
+# length: 9
 # name: costFuncType
 # type: cell
 # rows: 1
@@ -48,6 +48,34 @@ SE
 # name: <cell-element>
 # type: scalar
 3
+
+
+
+
+
+# name: preProcess_divide
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: matrix
+# rows: 1
+# columns: 2
+ 794.7023535338897 0.7609818867800997
+
+
+
+
+
+# name: preProcess_subtract
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: matrix
+# rows: 1
+# columns: 2
+ 2000.68085106383 3.170212765957447
 
 
 
@@ -107,9 +135,9 @@ linear
 # type: matrix
 # rows: 3
 # columns: 1
- 0
- 0
- 0
+ 340412.6595607437
+ 110631.008175489
+ -6649.432167462722
 
 
 

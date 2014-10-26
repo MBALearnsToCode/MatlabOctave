@@ -5,22 +5,22 @@ function ffNN_multiLinReg_housePrices...
    data = load('housePrices.txt');
    x1 = houseAreas_sqft = data(:, 1);
    x2 = houseNumsBedrooms = data(:, 2);
+   X = [x1 x2];
    y = housePrices = data(:, 3);
    m = rows(data);
    
    % Print out some data points
    fprintf('\nFirst 10 examples from the House Prices dataset: \n');
    fprintf('   area = %.0f, numBeds = %.0f, price = %.0f\n', ...
-      [x1(1 : 10, :) x2(1 : 10, :) y(1 : 10, :)]');   
-   
-   % Normalize scales of features for better convergence
-   X = [x1 x2];
-   coeffs_analytic = linRegWeights_analytic(y, X);
+      [x1(1 : 10, :) x2(1 : 10, :) y(1 : 10, :)]');
    
    % Linear regression coefficients - analytic solution
-   fprintf('\nLinear Regression Coefficients (analytic solution on normalized features):\n');
-   [X mu sigma] = normalizeMeanSd(X);
-   coeffs_analyticNormalized = linRegWeights_analytic(y, X)
+   coeffs_analytic = linRegWeights_analytic(y, X);
+   
+   % Normalize scales of features for better convergence
+   [X_norm mu sigma] = normalizeMeanSd(X);
+   fprintf('\nLinear Regression Coefficients (analytic solution on normalized features):\n');   
+   coeffs_analyticNormalized = linRegWeights_analytic(y, X_norm)
    
    %% Forward-Feeding Neural Net
    %% --------------------------   
@@ -30,6 +30,8 @@ function ffNN_multiLinReg_housePrices...
       transformFuncs_list = {'linear'}, ...
       displayOverview = false, ...
       initWeights_rand = false);
+   ffNN.preProcess_subtract = mu;
+   ffNN.preProcess_divide = sigma;
    
    ffNN = train_gradDesc...
       (ffNN_init = ffNN, ...
@@ -60,8 +62,7 @@ function ffNN_multiLinReg_housePrices...
    fprintf('   from Analytic Solution: %g\n', ...
       [1 testArea testNumBedrooms] * coeffs_analytic);
    fprintf('   from ffNN Solution: %g\n', ...
-      predict(ffNN, normalizeMeanSd...
-      ([testArea testNumBedrooms], mu, sigma)));
+      predict(ffNN, [testArea testNumBedrooms]));
    
    fprintf('\n');   
    

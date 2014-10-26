@@ -34,6 +34,7 @@ function [graphicHandle plotMat] = plot2D_grayImages...
    endfor
 
    % Display Image
+   figure;
    colormap(gray);
    h = imagesc(plotMat, [-1 1]);
    
