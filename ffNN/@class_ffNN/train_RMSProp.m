@@ -83,6 +83,9 @@ function [ffNN_avgWeights ...
       validBatchDim = max([batchDim ...
          arrNumDims(validInput) ...
          arrNumDims(validTargetOutput)]);
+      validNumBatches = max...
+         ([size(validInput, validBatchDim) ...
+         size(validTargetOutput, validBatchDim)]);
    endif
    bestStop = valid_provided && bestStop;
    if (bestStop)
@@ -97,6 +100,9 @@ function [ffNN_avgWeights ...
       testBatchDim = max([batchDim ...
          arrNumDims(testInput) ...
          arrNumDims(testTargetOutput)]);
+      testNumBatches = max...
+         ([size(testInput, testBatchDim) ...
+         size(testTargetOutput, testBatchDim)]);
    endif
    
    stepRate = stepRate_init;   
@@ -435,6 +441,7 @@ fprintf('\n\n   RESULTS:   Training Finished w/ Following Avg Costs (excl Weight
       trainAccuracyAvg_text);
       
    if (valid_provided)
+   
       if (bestStop)
          ffNN_avgWeights = ffNN_avgWeights_best;
          validCostAvg_exclWeightPenalty = ...
@@ -442,26 +449,64 @@ fprintf('\n\n   RESULTS:   Training Finished w/ Following Avg Costs (excl Weight
          validAccuracyAvg = validAccuracyAvg_best;         
          validAccuracyAvg_text = validAccuracyAvg_text_best;
       endif
-      fprintf('      Validation: %.3g%s\n', ...
+      
+      fprintf('      Validation: %.3g%s', ...
          validCostAvg_exclWeightPenalty, ...
          validAccuracyAvg_text);
+         
+      if (costFuncType_isCrossEntropy) && ...
+         (validNumBatches == 1)
+         pred = predict(ffNN_avgWeights, validInput);
+         switch (costFuncType)         
+            case ('CE-L')               
+               acc = binClassifAccuracy(pred, ...
+                  validTargetOutput);
+            case ('CE-S')
+               acc = classifAccuracy(pred, validTargetOutput);
+         endswitch
+         fprintf(', Actual Classification Accuracy %.3g%%', ...
+            100 * acc);
+      endif
+      
+      fprintf('\n');
+         
    endif
    
    if (test_provided)
+   
       [testCostAvg_exclWeightPenalty testAccuracyAvg] = ...
          costAvg_exclWeightPenalty(ffNN_avgWeights, ...
          testInput, testTargetOutput, ...
          targetOutputs_areClassIndcsColVecs_ofNumClasses, ...
          testBatchDim);
+         
       if (costFuncType_isCrossEntropy)
          testAccuracyAvg_text = sprintf...
-            (' (%.3g%%)', 100 * testAccuracyAvg);
+            (' (%.3g%%)', 100 * testAccuracyAvg);         
       else
          testAccuracyAvg_text = '';
       endif
-      fprintf('      Test: %.3g%s\n', ...
+      
+      fprintf('      Test: %.3g%s', ...
          testCostAvg_exclWeightPenalty, ...
          testAccuracyAvg_text);
+         
+      if (costFuncType_isCrossEntropy) && ...
+         (testNumBatches == 1)
+         pred = predict(ffNN_avgWeights, testInput);
+         switch (costFuncType)         
+            case ('CE-L')               
+               acc = binClassifAccuracy(pred, ...
+                  testTargetOutput);
+            case ('CE-S')
+               acc = classifAccuracy(pred, testTargetOutput);
+         endswitch
+         fprintf(', Actual Classification Accuracy %.3g%%', ...
+            100 * acc);
+      endif      
+      
+      fprintf('\n');
+      
    endif  
 
    fprintf('\n');
