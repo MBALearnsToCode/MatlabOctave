@@ -174,7 +174,7 @@ fprintf('      Validation Avg Cost (excl Weight Penalty) updated every %i batche
       validCostCalcInterval_numChunks ...
       * trainCostApproxChunk_numBatches);
    if (costFuncType_isCrossEntropy)
-fprintf('         (Est Avg Classification Accuracy %%s in brackets)\n');
+fprintf('         (Classification Confidence %%s in brackets)\n');
    endif
    
    if (plotLearningCurves)
