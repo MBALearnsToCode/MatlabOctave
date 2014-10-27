@@ -204,9 +204,16 @@ fprintf('         (Classification Confidence %%s in brackets)\n');
             {weightRegulFuncs weightRegulParams}, ...
             connectivitiesOnOff, true);
          
-         ffNN.weights = convertColVecToArrs...
-         (fmincg(func, convertArrsToColVec(ffNN.weights), ...
-            conjGrad_options), weightDimSizes);
+         w0 = convertArrsToColVec(ffNN.weights);
+         w = fmincg(func, w0, conjGrad_options);
+         % if FMINCG hits bug, try FMINUNC as last resort
+         if equalTest(w, w0)
+            try
+               w = fminunc(func, w0, conjGrad_options);
+            catch
+            end_try_catch
+         endif
+         ffNN.weights = convertColVecToArrs(w, weightDimSizes);         
                         
          ffNN_avgWeights = avgWeights_byConnectProbs...
             (ffNN, connectProbs);            
