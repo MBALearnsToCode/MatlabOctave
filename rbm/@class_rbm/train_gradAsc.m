@@ -53,12 +53,12 @@ function [rbm_updated ...
       arrNumDims(trainData_batches)]);
    trainNumBatches = size(trainData_batches, trainBatchDim);   
 
-   valid_provided = ~isempty(validData);
-   validProvided_n_bestStop = valid_provided && bestStop;
+   valid_provided = ~isempty(validData);   
    if (valid_provided)
       validBatchDim = max([batchDim arrNumDims(validData)]);
    endif
-   if (validProvided_n_bestStop)
+   bestStop = valid_provided && bestStop;
+   if (bestStop)
       rbm_best = rbm_updated;
       validGoodnessAvg_exclWeightPenalty_best = -Inf;
       toSaveBest = false;
@@ -126,7 +126,7 @@ fprintf(',   applying Nesterov Accelerated Gradient (NAG)\n');
       weightRegulFunc, weightRegulParam);   
    weightRegulFunc = convertText_toRegulFunc(weightRegulFunc);
    
-   if (validProvided_n_bestStop)
+   if (bestStop)
 fprintf('      Model Selection by Best Validation Performance\n');
    endif
    
@@ -234,7 +234,7 @@ fprintf('      Validation Avg Cost (excl Weight Penalty) updated every %i batche
             endif
             
             if (time > lastSaveTime + saveEvery_numMins * 60)
-               if (validProvided_n_bestStop)
+               if (bestStop)
                   if (toSaveBest)
                      saveFile(rbm_updated, saveFileName);
                      lastSaveTime = time;
@@ -246,14 +246,23 @@ fprintf('      Validation Avg Cost (excl Weight Penalty) updated every %i batche
                endif               
             endif            
             
+            if (bestStop) && isfinite...
+               (validGoodnessAvg_exclWeightPenalty_best)
+               validReport_text = sprintf('%.3g Best %.3g', ...
+                  validGoodnessAvg_exclWeightPenalty, ...
+                  validGoodnessAvg_exclWeightPenalty_best);
+            else
+               validReport_text = sprintf('%.3g', ...
+                  validGoodnessAvg_exclWeightPenalty);
+            endif
+            
             trainCurrTime = time;
             trainElapsedTime_numMins = ...
                (trainCurrTime - trainStartTime) / 60;
-fprintf('\r      Epoch %i Batch %i (CD-%i): TRAIN %.3g, VALID %.3g, elapsed %.3gm      ', ...
+fprintf('\r      Epoch %i Batch %i (CD-%i): TRAIN %.3g, VALID %s, elapsed %.3gm      ', ...
                epoch, batch, cd_chainLength, ...
             trainGoodnessAvg_exclWeightPenalty_currChunk, ...              
-               validGoodnessAvg_exclWeightPenalty, ...
-               trainElapsedTime_numMins);
+               validReport_text, trainElapsedTime_numMins);
             
             if (plotLearningCurves)               
                rbm_plotLearningCurves...

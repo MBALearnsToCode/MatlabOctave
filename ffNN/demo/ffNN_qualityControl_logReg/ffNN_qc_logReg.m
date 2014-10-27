@@ -4,7 +4,7 @@
 % linear-inseparability in 2 dimensions
 % 3. Use of weight regularization in reducing overfitting
 
-function ffNN = ffNN_logReg_qc(weightPenaltyTerm = 0, ...
+function ffNN = ffNN_qc_logReg(weightPenaltyTerm = 0, ...
    numEpochs = 300, numIters_perEpoch = 30, polyDeg = 9);
 
    % Close existing plots
