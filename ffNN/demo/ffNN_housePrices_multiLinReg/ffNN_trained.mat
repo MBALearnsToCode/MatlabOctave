@@ -1,4 +1,4 @@
-# Created by Octave 3.8.2, Sun Oct 26 14:04:36 2014 Central Daylight Time <unknown@WIN-A1IUAI5TB9H>
+# Created by Octave 3.8.2, Mon Oct 27 13:52:26 2014 Central Daylight Time <unknown@MyPC>
 # name: ffNN_file
 # type: class
 # classname: class_ffNN
@@ -29,6 +29,34 @@ SE
 
 
 
+# name: normalizeDivide
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: matrix
+# rows: 1
+# columns: 2
+ 794.7023535338897 0.7609818867800997
+
+
+
+
+
+# name: normalizeSubtract
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: matrix
+# rows: 1
+# columns: 2
+ 2000.68085106383 3.170212765957447
+
+
+
+
+
 # name: numTransforms
 # type: cell
 # rows: 1
@@ -48,34 +76,6 @@ SE
 # name: <cell-element>
 # type: scalar
 3
-
-
-
-
-
-# name: preProcess_divide
-# type: cell
-# rows: 1
-# columns: 1
-# name: <cell-element>
-# type: matrix
-# rows: 1
-# columns: 2
- 794.7023535338897 0.7609818867800997
-
-
-
-
-
-# name: preProcess_subtract
-# type: cell
-# rows: 1
-# columns: 1
-# name: <cell-element>
-# type: matrix
-# rows: 1
-# columns: 2
- 2000.68085106383 3.170212765957447
 
 
 
@@ -135,9 +135,9 @@ linear
 # type: matrix
 # rows: 3
 # columns: 1
- 340412.6595607437
- 110631.008175489
- -6649.432167462722
+ 340412.6595744681
+ 110631.0502897786
+ -6649.474296570062
 
 
 
