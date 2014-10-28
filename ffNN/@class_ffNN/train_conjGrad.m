@@ -264,17 +264,41 @@ fprintf('         (Classification Confidence %%s in brackets)\n');
                if (costFuncType_isCrossEntropy)
                   validAccuracyAvg_text = sprintf...
                      (' (%.3g%%)', 100 * validAccuracyAvg);
-               endif               
+               endif
+               
                if (bestStop && ...
                   (validCostAvg_exclWeightPenalty ...
                   < validCostAvg_exclWeightPenalty_best))
+                  
                   ffNN_avgWeights_best = ffNN_avgWeights;
+                  
+                  if (trainNumBatches == 1)
+                     trainCostAvg_exclWeightPenalty_best = ...
+                     trainCostAvg_exclWeightPenalty_currBatch;
+                     trainAccuracyAvg_best = ...
+                        trainAccuracyAvg_currBatch;
+                     if (costFuncType_isCrossEntropy)
+                        trainAccuracyAvg_text_best = sprintf...
+                           (' (%.3g%%)', 100 * ...
+                           trainAccuracyAvg_best);
+                     endif   
+                  else
+                     trainCostAvg_exclWeightPenalty_best = ...
+                     trainCostAvg_exclWeightPenalty_currChunk;
+                     trainAccuracyAvg_best = ...
+                        trainAccuracyAvg_currChunk;
+                     trainAccuracyAvg_best_text = ...
+                        trainAccuracyAvg_text;                     
+                  endif
+                  
                   validCostAvg_exclWeightPenalty_best = ...
                      validCostAvg_exclWeightPenalty;
                   validAccuracyAvg_best = validAccuracyAvg;
                   validAccuracyAvg_text_best = ...
                      validAccuracyAvg_text;
+                     
                   toSaveBest = true;
+                  
                endif
             
             else
@@ -345,21 +369,50 @@ fprintf('\r      Epoch %i Batch %i: TRAIN %.3g%s, VALID %s, elapsed %.1fm   ', .
 
 fprintf('\n\n   RESULTS:   Training Finished w/ Following Avg Costs (excl Weight Penalty):\n');
 
-   trainCostAvg_exclWeightPenalty_approx = ...
-      trainCostsAvg_exclWeightPenalty_approx(end);
-   fprintf('      Training (approx''d by last chunk): %.3g%s\n', ...
-      trainCostAvg_exclWeightPenalty_approx, ...
-      trainAccuracyAvg_text);
-      
-   if (valid_provided)
+   if (bestStop)
    
-      if (bestStop)
-         ffNN_avgWeights = ffNN_avgWeights_best;
-         validCostAvg_exclWeightPenalty = ...
-            validCostAvg_exclWeightPenalty_best;
-         validAccuracyAvg = validAccuracyAvg_best;
-         validAccuracyAvg_text = validAccuracyAvg_text_best;
-      endif
+      ffNN_avgWeights = ffNN_avgWeights_best;
+      
+      trainCostAvg_exclWeightPenalty_approx = ...
+         trainCostAvg_exclWeightPenalty_best;
+      trainAccuracyAvg = trainAccuracyAvg_best;
+      trainAccuracyAvg_text = trainAccuracyAvg_text_best;
+      fprintf('      Training: %.3g%s', ...
+         trainCostAvg_exclWeightPenalty_approx, ...
+         trainAccuracyAvg_text);
+         
+      validCostAvg_exclWeightPenalty = ...
+         validCostAvg_exclWeightPenalty_best;
+      validAccuracyAvg = validAccuracyAvg_best;
+      validAccuracyAvg_text = validAccuracyAvg_text_best;
+      
+   else
+   
+      trainCostAvg_exclWeightPenalty_approx = ...
+         trainCostsAvg_exclWeightPenalty_approx(end);
+      fprintf('      Training (approx''d by last chunk): %.3g%s', ...
+         trainCostAvg_exclWeightPenalty_approx, ...
+         trainAccuracyAvg_text);
+         
+   endif
+   
+   if (costFuncType_isCrossEntropy) && ...
+      (trainNumBatches == 1)
+      pred = predict(ffNN_avgWeights, trainInput_batch);
+      switch (costFuncType)
+         case ('CE-L')               
+            acc = binClassifAccuracy(pred, ...
+               trainTargetOutput_batch);
+         case ('CE-S')
+            acc = classifAccuracy(pred, ...
+               trainTargetOutput_batch);
+      endswitch
+      fprintf(', Actual Classification Accuracy %.3g%%', ...
+         100 * acc);
+   endif   
+   fprintf('\n');
+      
+   if (valid_provided)      
       
       fprintf('      Validation: %.3g%s', ...
          validCostAvg_exclWeightPenalty, ...
