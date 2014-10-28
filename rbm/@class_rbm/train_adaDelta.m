@@ -256,10 +256,22 @@ fprintf('      Validation Avg Goodness (excl Weight Penalty) updated every %i ba
                if (bestStop && ...
                   (validGoodnessAvg_exclWeightPenalty ...
                   > validGoodnessAvg_exclWeightPenalty_best))
+                  
                   rbm_best = rbm_updated;
+                  
+                  if (trainNumBatches == 1)
+                  trainGoodnessAvg_exclWeightPenalty_best = ...
+                  trainGoodnessAvg_exclWeightPenalty_currBatch;
+                  else
+                  trainGoodnessAvg_exclWeightPenalty_best = ...
+                  trainGoodnessAvg_exclWeightPenalty_currChunk;                  
+                  endif
+                  
                   validGoodnessAvg_exclWeightPenalty_best = ...
                      validGoodnessAvg_exclWeightPenalty;
+                     
                   toSaveBest = true;
+                  
                endif
             
             else
@@ -324,17 +336,26 @@ fprintf('\r      Epoch %i Batch %i (CD-%i): TRAIN %.3g, VALID %s, elapsed %.1fm 
 
 fprintf('\n\n   RESULTS:   Training Finished w/ Following Avg Goodnesss (excl Weight Penalty):\n');
 
-   trainGoodnessAvg_exclWeightPenalty_approx = ...
-      trainGoodnessesAvg_exclWeightPenalty_approx(end);
-   fprintf('      Training (approx''d by last chunk): %.3g\n', ...
-      trainGoodnessAvg_exclWeightPenalty_approx);
+   if (bestStop)
+      rbm_updated = rbm_best;
+      trainGoodnessAvg_exclWeightPenalty_approx = ...
+         trainGoodnessAvg_exclWeightPenalty_best;
+      validGoodnessAvg_exclWeightPenalty = ...
+         validGoodnessAvg_exclWeightPenalty_best;
+   else
+      trainGoodnessAvg_exclWeightPenalty_approx = ...
+         trainGoodnessesAvg_exclWeightPenalty_approx(end);
+   endif
+
+   if (trainNumBatches == 1)
+      fprintf('      Training: %.3g\n', ...
+         trainGoodnessAvg_exclWeightPenalty_approx);
+   else
+      fprintf('      Training (approx''d by last chunk): %.3g\n', ...
+         trainGoodnessAvg_exclWeightPenalty_approx);
+   endif
       
-   if (valid_provided)
-      if (bestStop)
-         rbm_updated = rbm_best;
-         validGoodnessAvg_exclWeightPenalty = ...
-            validGoodnessAvg_exclWeightPenalty_best;
-      endif
+   if (valid_provided)      
       fprintf('      Validation: %.3g\n', ...
          validGoodnessAvg_exclWeightPenalty);
    endif   

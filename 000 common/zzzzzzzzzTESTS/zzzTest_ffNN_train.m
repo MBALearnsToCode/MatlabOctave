@@ -1,5 +1,7 @@
 function ffNN = zzzTest_ffNN_train(method = 'conjGrad')   
    
+   fprintf('\nTESTING FFNN TRAINING METHOD: %s\n\n', upper(method));
+   
    % load data
    [trainInput trainTargetOutput trainTargetOutput_labels ...
       validInput validTargetOutput validTargetOutput_labels ...
@@ -151,13 +153,15 @@ function ffNN = zzzTest_ffNN_train(method = 'conjGrad')
    fprintf('TO TEST: Training set cost, confidence & accuracy are correct\n\n');
    pausePressKey;
    close all;
-   train(data = {trainInput trainTargetOutput}, ...
+   train(data = {trainInput trainTargetOutput 1.0}, ...
       numEpochs = 23, ...
       batchSize = false, ...
       weightRegulParam = 0, ...
       bestStop = true);
-   fprintf('MANUAL CROSS-CHECKS:\n');   
    ffNN = ffNN_loadFile('ffNN_trained.mat');
+   
+   fprintf('MANUAL CROSS-CHECKS:\n');
+   
    [~, ~, ~, hypoOutput] = fProp_bProp(ffNN, trainInput);
    calcs = costFuncAvg_crossEntropy_softmax...
       (hypoOutput, trainTargetOutput);
@@ -165,9 +169,10 @@ function ffNN = zzzTest_ffNN_train(method = 'conjGrad')
    trainConfidence = sprintf('%.3g%%', ...
       100 * sum(sum(hypoOutput .* trainTargetOutput)) ...
       / trainNumCases)
-   pred = predict(ffNN, trainInput);
+   pred = max(hypoOutput, [], 2);
    trainAccuracy = sprintf('%.3g%%', ...
-      100 * mean(double(pred == trainTargetOutput_labels)))   
+      100 * mean(double(pred == trainTargetOutput_labels)))
+      
    fprintf('\n');
    
    
@@ -185,8 +190,10 @@ function ffNN = zzzTest_ffNN_train(method = 'conjGrad')
       batchSize = false, ...
       weightRegulParam = 0, ...
       bestStop = false);
-   fprintf('MANUAL CROSS-CHECKS:\n');   
    ffNN = ffNN_loadFile('ffNN_trained.mat');
+   
+   fprintf('MANUAL CROSS-CHECKS:\n');
+   
    [~, ~, ~, hypoOutput] = fProp_bProp(ffNN, trainInput);
    calcs = costFuncAvg_crossEntropy_softmax...
       (hypoOutput, trainTargetOutput);
@@ -194,9 +201,10 @@ function ffNN = zzzTest_ffNN_train(method = 'conjGrad')
    trainConfidence = sprintf('%.3g%%', ...
       100 * sum(sum(hypoOutput .* trainTargetOutput)) ...
       / trainNumCases)
-   pred = predict(ffNN, trainInput);
+   pred = max(hypoOutput, [], 2);
    trainAccuracy = sprintf('%.3g%%', ...
-      100 * mean(double(pred == trainTargetOutput_labels)))      
+      100 * mean(double(pred == trainTargetOutput_labels)))
+      
    [~, ~, ~, hypoOutput] = fProp_bProp(ffNN, validInput);
    calcs = costFuncAvg_crossEntropy_softmax...
       (hypoOutput, validTargetOutput);
@@ -204,9 +212,66 @@ function ffNN = zzzTest_ffNN_train(method = 'conjGrad')
    validConfidence = sprintf('%.3g%%', ...
       100 * sum(sum(hypoOutput .* validTargetOutput)) ...
       / validNumCases)
-   pred = predict(ffNN, validInput);
+   pred = max(hypoOutput, [], 2);
+   validAccuracy = sprintf('%.3g%%', ...
+      100 * mean(double(pred == validTargetOutput_labels)))
+      
+   fprintf('\n');
+   
+   
+   
+   fprintf('\nSCENARIO: train FFNN with Training, Validation & Test data, WITH early stop\n');
+   fprintf('TO TEST: Validation reporting every 3 chunks & at last iteration\n');
+   fprintf('TO TEST: Best Validation reporting\n');
+   fprintf('TO TEST: final Training set costs & confidences DO NOT match last iteration\n');
+   fprintf('TO TEST: final Validation set costs & confidences match Best iteration\n');
+   fprintf('TO TEST: Training, Validation & Test set costs, confidences & accuracies are correct\n\n');
+   pausePressKey;
+   close all;
+   train(dataArgs = {trainInput trainTargetOutput ...
+                     validInput validTargetOutput
+                     testInput testTargetOutput}, ...
+      numEpochs = 100, ...
+      batchSize = false, ...
+      weightRegulParam = 0, ...
+      bestStop = true);
+   ffNN = ffNN_loadFile('ffNN_trained.mat');
+   
+   fprintf('MANUAL CROSS-CHECKS:\n');   
+   
+   [~, ~, ~, hypoOutput] = fProp_bProp(ffNN, trainInput);
+   calcs = costFuncAvg_crossEntropy_softmax...
+      (hypoOutput, trainTargetOutput);
+   trainCost = sprintf('%.3g', calcs.val)
+   trainConfidence = sprintf('%.3g%%', ...
+      100 * sum(sum(hypoOutput .* trainTargetOutput)) ...
+      / trainNumCases)
+   pred = max(hypoOutput, [], 2);
    trainAccuracy = sprintf('%.3g%%', ...
-      100 * mean(double(pred == validTargetOutput_labels)))   
+      100 * mean(double(pred == trainTargetOutput_labels)))
+      
+   [~, ~, ~, hypoOutput] = fProp_bProp(ffNN, validInput);
+   calcs = costFuncAvg_crossEntropy_softmax...
+      (hypoOutput, validTargetOutput);
+   validCost = sprintf('%.3g', calcs.val)
+   validConfidence = sprintf('%.3g%%', ...
+      100 * sum(sum(hypoOutput .* validTargetOutput)) ...
+      / validNumCases)
+   pred = max(hypoOutput, [], 2);
+   validAccuracy = sprintf('%.3g%%', ...
+      100 * mean(double(pred == validTargetOutput_labels)))
+   
+   [~, ~, ~, hypoOutput] = fProp_bProp(ffNN, testInput);
+   calcs = costFuncAvg_crossEntropy_softmax...
+      (hypoOutput, testTargetOutput);
+   testCost = sprintf('%.3g', calcs.val)
+   testConfidence = sprintf('%.3g%%', ...
+      100 * sum(sum(hypoOutput .* testTargetOutput)) ...
+      / testNumCases)
+   pred = max(hypoOutput, [], 2);
+   validAccuracy = sprintf('%.3g%%', ...
+      100 * mean(double(pred == testTargetOutput_labels)))
+   
    fprintf('\n');
    
 endfunction

@@ -400,10 +400,7 @@ fprintf('\n\n   RESULTS:   Training Finished w/ Following Avg Costs (excl Weight
       trainCostAvg_exclWeightPenalty_approx = ...
          trainCostAvg_exclWeightPenalty_best;
       trainAccuracyAvg = trainAccuracyAvg_best;
-      trainAccuracyAvg_text = trainAccuracyAvg_text_best;
-      fprintf('      Training: %.3g%s', ...
-         trainCostAvg_exclWeightPenalty_approx, ...
-         trainAccuracyAvg_text);
+      trainAccuracyAvg_text = trainAccuracyAvg_text_best;      
          
       validCostAvg_exclWeightPenalty = ...
          validCostAvg_exclWeightPenalty_best;
@@ -413,11 +410,18 @@ fprintf('\n\n   RESULTS:   Training Finished w/ Following Avg Costs (excl Weight
    else
       
       trainCostAvg_exclWeightPenalty_approx = ...
-         trainCostsAvg_exclWeightPenalty_approx(end);
-      fprintf('      Training (approx''d by last chunk): %.3g%s\n', ...
+         trainCostsAvg_exclWeightPenalty_approx(end);      
+      
+   endif
+   
+   if (trainNumBatches == 1)
+      fprintf('      Training: %.3g%s', ...
          trainCostAvg_exclWeightPenalty_approx, ...
          trainAccuracyAvg_text);
-      
+   else   
+      fprintf('      Training (approx''d by last chunk): %.3g%s', ...
+         trainCostAvg_exclWeightPenalty_approx, ...
+         trainAccuracyAvg_text);
    endif
    
    if (costFuncType_isCrossEntropy) && ...
@@ -435,7 +439,8 @@ fprintf('\n\n   RESULTS:   Training Finished w/ Following Avg Costs (excl Weight
          100 * acc);
    endif
    
-   fprintf('\n');   
+   fprintf('\n');
+   
    if (valid_provided)
    
       fprintf('      Validation: %.3g%s', ...
