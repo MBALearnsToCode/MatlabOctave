@@ -470,8 +470,17 @@ fprintf('\n\n   RESULTS:   Training Finished w/ Following Avg Costs (excl Weight
       
    else
       
-      trainCostAvg_exclWeightPenalty_approx = ...
-         trainCostsAvg_exclWeightPenalty_approx(end);      
+      if (trainNumBatches == 1)
+         trainCostAvg_exclWeightPenalty_approx = ...
+            trainCostAvg_exclWeightPenalty_currBatch;
+         if (costFuncType_isCrossEntropy)   
+            trainAccuracyAvg_text = sprintf(' (%.3g%%)', ...
+               100 * trainAccuracyAvg_currBatch);
+         endif   
+      else
+         trainCostAvg_exclWeightPenalty_approx = ...
+            trainCostsAvg_exclWeightPenalty_approx(end);
+      endif
    
    endif
    
@@ -499,7 +508,8 @@ fprintf('\n\n   RESULTS:   Training Finished w/ Following Avg Costs (excl Weight
       fprintf(', Actual Classification Accuracy %.3g%%', ...
          100 * acc);
    endif
-      
+   fprintf('\n');
+   
    if (valid_provided)
 
       fprintf('      Validation: %.3g%s', ...

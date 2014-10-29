@@ -343,8 +343,13 @@ fprintf('\n\n   RESULTS:   Training Finished w/ Following Avg Goodnesss (excl We
       validGoodnessAvg_exclWeightPenalty = ...
          validGoodnessAvg_exclWeightPenalty_best;
    else
-      trainGoodnessAvg_exclWeightPenalty_approx = ...
-         trainGoodnessesAvg_exclWeightPenalty_approx(end);
+      if (trainNumBatches == 1)
+         trainGoodnessAvg_exclWeightPenalty_approx = ...
+            trainGoodnessAvg_exclWeightPenalty_currBatch;
+      else
+         trainGoodnessAvg_exclWeightPenalty_approx = ...
+            trainGoodnessesAvg_exclWeightPenalty_approx(end);
+      endif
    endif
 
    if (trainNumBatches == 1)
