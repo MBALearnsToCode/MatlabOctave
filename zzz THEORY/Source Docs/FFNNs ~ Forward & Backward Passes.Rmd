@@ -8,35 +8,19 @@ output: html_document
 
 *1. FFNNs are **supervised** learning models*
 
-*2. **Cost functions** measure degree of prediction error*
+*2. An FFNN consists of **layers** of **transformation functions** and **weights***
 
-*3. **Training** is mathematical optimization that makes cost decrease*
+*3. FFNNs' **forward pass** models **hypothesized output***
 
-*4. An FFNN consists of **layers** of **transformation functions** and **weights***
-
-*5. FFNNs' **forward pass** models **hypothesized output***
-
-*6. FFNNs' **backward pass** computes **partial derivatives** of cost function with respect to weight layers, for use in mathematical optimization*
+*4. FFNNs' **backward pass** computes **partial derivatives** of cost function with respect to weight layers, for use in mathematical optimization*
 
 <br><br><br>
 <br><br><br>
 <br><br><br>
 <br><br><br>
 <br><br><br>
-
-### FFNNs: Supervised Learning Models with Continuous Real-Valued Scalar "Hypothesis-vs.-Target" Cost Functions
-FFNNs are **supervised** learning models: given Input $\mathbf X$ - a matrix/array representing $m$ cases of input features - and Target Output $\mathbf Y$ representing the $m$ corresponding "**right answers**", a Supervised Learning Model tries to learn a structured mapping that transforms $\mathbf X$ to Hypothesized Output $\mathbf H$ that is similar/close to $\mathbf Y$.
-
-The extent of $\mathbf H$'s similarity/closeness to $\mathbf Y$ - which is the criterion to judge how well a Supervised Learning Model learns to mimick $\mathbf Y$ from knowing $\mathbf X$ - is numerically measured by a certain specified scalar cost function $c(\mathbf H, \mathbf Y)$. This function $c$'s value should be small when $\mathbf H$ is very "similar" or "close" to $\mathbf Y$, and large otherwise. In almost all Supervised Learning Models in practical use nowadays, $c(\mathbf H, \mathbf Y)$ is a continous real-valued function and its partial derivative $\frac {\partial c} {\partial \mathbf H}$ with respect to $\mathbf H$ is computable as a certain function $d(\mathbf H, \mathbf Y)$. Cost functions are usually measured on an average per-case basis.
-
-The task of helping a Supervised Learning Model learn - or so-called "**training**" it - involves mathematical optimization procedures that make the average per-case $\mathbf H$-vs.-$\mathbf Y$ cost decrease when we let the Model see more and more cases of inputs and corresponding "right-answer" target outputs. Once trained until its cost has decreased to an acceptably low level, a Model will make only small errors and hence be a good tool for predicting the output $\mathbf y$ from a not-yet-seen input $\mathbf x$.
-
-Note that we are using the rather gentle phrase "acceptably low" instead of the stronger word "minimized". This is because when a Supervised Learning Model does achieve the absolutely smallest possible error rate during the "training" process, it will have over-learned: not only will it have learned the overall rules of the game (which are useful when generalizing to new cases), it will have also **memorized various irrelevant idiosyncracies** specific to the training data (which **hurts** its generalization ability). We'll discuss this so-called "**over-fitting**" issue separately.
 <br><br><br>
-<br><br><br>
-<br><br><br>
-<br><br><br>
-<br><br><br>
+<br>
 
 ### Model Structure / Hypothesis: Forward Pass
 In a generalized sense, an FFNN models Hypothesized Output $\mathbf H = h(\mathbf X , \mathbf W ^{\left[ 1 \right]}, \mathbf W ^{\left[ 2 \right]}, \dotsc, \mathbf W ^{\left[ L \right]})$ through 1 input layer and $L$ additional layers of transformation functions and parameters (called "weights") in the following manner:

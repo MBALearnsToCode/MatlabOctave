@@ -1,8 +1,8 @@
-# Created by Octave 3.8.2, Fri Oct 24 23:01:35 2014 Central Daylight Time <unknown@MyPC>
+# Created by Octave 3.8.2, Wed Oct 29 22:37:43 2014 Central Daylight Time <unknown@MyPC>
 # name: ffNN_file
 # type: class
 # classname: class_ffNN
-# length: 7
+# length: 9
 # name: costFuncType
 # type: cell
 # rows: 1
@@ -10,8 +10,8 @@
 # name: <cell-element>
 # type: sq_string
 # elements: 1
-# length: 4
-CE-L
+# length: 2
+SE
 
 
 
@@ -23,7 +23,35 @@ CE-L
 # columns: 1
 # name: <cell-element>
 # type: scalar
-27
+4
+
+
+
+
+
+# name: normalizeDivide
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: matrix
+# rows: 1
+# columns: 4
+ 798.4022465952992 4293472.781876395 19740713055.53304 88738999625851.53
+
+
+
+
+
+# name: normalizeSubtract
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: matrix
+# rows: 1
+# columns: 4
+ 2020.6 4688398.2 12660963605.8 39493290784041
 
 
 
@@ -47,7 +75,7 @@ CE-L
 # columns: 1
 # name: <cell-element>
 # type: scalar
-28
+5
 
 
 
@@ -64,8 +92,8 @@ CE-L
 # name: <cell-element>
 # type: sq_string
 # elements: 1
-# length: 8
-logistic
+# length: 6
+linear
 
 
 
@@ -86,7 +114,7 @@ logistic
 # type: matrix
 # rows: 1
 # columns: 2
- 28 1
+ 5 1
 
 
 
@@ -105,36 +133,13 @@ logistic
 # columns: 1
 # name: <cell-element>
 # type: matrix
-# rows: 28
+# rows: 5
 # columns: 1
- 0.01390954583508125
- -0.01530443654308894
- 0.004399283643036115
- -0.04697048921037325
- -0.01121993341114213
- -0.03303389106808476
- -0.01595686336431053
- -0.006620412742488576
- -0.007632604025709914
- -0.01972103114121675
- -0.03702873995332272
- -0.002035435604550135
- -0.01205748549225171
- -0.002992286155889386
- -0.03548786005529587
- -0.0180465131518066
- -0.00403044022262869
- -0.003080326124449303
- -0.005401675482372316
- -0.004283665739726772
- -0.02749687087965038
- -0.02915571109291737
- -0.0009381562663507203
- -0.00598279261955401
- -0.0003392457091062836
- -0.00680730235550767
- -0.001327546509161012
- -0.03521720779222837
+ 353.2247499999999
+ 109.5927549411224
+ 76.37317939357092
+ 7.520983682322549
+ -68.96821819273563
 
 
 
