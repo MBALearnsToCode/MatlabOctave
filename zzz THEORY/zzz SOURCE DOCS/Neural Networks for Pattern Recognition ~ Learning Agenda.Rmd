@@ -1,0 +1,59 @@
+---
+title: 'Neural Networks for Pattern Recognition: Agenda'
+output: pdf_document
+fontsize: 12pt
+geometry: margin=1.5cm
+---
+<br>
+
+
+
+### SESSION 1
+
+1. Overview of Supervised Machine Learning
+2. EXAMPLE: Linear Regression; Squared-Error Cost Function, Root Mean Square Error (RMSE)
+3. Training & Test Data Sets
+4. Regularization by Weight Penalty; Its Effects on Training & Test Performances
+5. Validation Data Set; Learning Curves; Weight Regularization by Early Stopping
+6. EXAMPLE: Logistic Regression; Cross-Entropy Cost Function
+
+HOMEWORK:
+
+1. Regularizing Logistic Regression by Weight Penalty
+2. Regularizing Logistic Regression by Early Stopping
+
+<br>
+
+
+
+### SESSION 2
+
+1. Neural Networks with Logistic Transformation Functions
+2. EXAMPLE: Learning Logical Functions AND & OR
+3. How Neural Networks Learn: Forward Propagation & Backward Propagation
+4. EXAMPLE: Learning Complicated, Many-Variable Logical Combinations
+5. EXAMPLE: Learning Hand-Written Digits: Number 3 vs. Not Number 3
+
+HOMEWORK:
+
+1. Training Neural Network to Learn Number 8 vs. Not Number 8
+2. CASE STUDY: Google Self-Driving Car; Video on Early Self-Driving Car
+
+<br>
+
+
+
+### SESSION 3
+
+1. CASE STUDY DISCUSSION: Google Self-Driving Car
+2. Softmax Transformation Function for Multi-Class Classification; Comparison with Collection of One-vs.-All Binary Classifiers
+3. EXAMPLE: Learning All 10 Hand-Written Digits
+4. Briefing on Final Exam (Live Team Competition)
+
+<br>
+
+
+
+### SESSION 4
+
+Final Exam (Live Team Competition): Human Activity Tracking Dataset for Classifying Quality of Bicep Curls

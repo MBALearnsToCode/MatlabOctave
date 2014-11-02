@@ -1,5 +1,5 @@
 ---
-title: "Forward-Feeding Neural Networks (FFNNs): Forward & Backward Passes"
+title: 'Forward-Feeding Neural Networks (FFNNs): Forward & Backward Passes'
 output: html_document
 ---
 <br><br><br>

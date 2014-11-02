@@ -1,5 +1,6 @@
 ---
-title: "Forward-Feeding Neural Networks (FFNNs): Canonical Transformation Functions, Their Derivatives & Their Corresponding Cost Functions"
+title: 'Forward-Feeding Neural Networks (FFNNs): Canonical Transformation Functions,
+  Their Derivatives & Their Corresponding Cost Functions'
 output: html_document
 ---
 <br><br><br>
