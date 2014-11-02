@@ -10,12 +10,11 @@ geometry: margin=1.5cm
 
 ### SESSION 1
 
-1. Overview of Supervised Machine Learning
+1. Overview of Supervised Machine Learning; Training & Test Data Sets
 2. EXAMPLE: Linear Regression; Squared-Error Cost Function, Root Mean Square Error (RMSE)
-3. Training & Test Data Sets
-4. Regularization by Weight Penalty; Its Effects on Training & Test Performances
-5. Validation Data Set; Learning Curves; Weight Regularization by Early Stopping
-6. EXAMPLE: Logistic Regression; Cross-Entropy Cost Function
+3. Regularization by Weight Penalty; Its Effects on Training & Test Performances
+4. Validation Data Set; Learning Curves; Weight Regularization by Early Stopping
+5. EXAMPLE: Logistic Regression; Cross-Entropy Cost Function
 
 HOMEWORK:
 

@@ -1,4 +1,4 @@
-# Created by Octave 3.8.2, Wed Oct 29 22:37:43 2014 Central Daylight Time <unknown@MyPC>
+# Created by Octave 3.8.2, Sun Nov 02 00:16:19 2014 Central Daylight Time <unknown@MyPC>
 # name: ffNN_file
 # type: class
 # classname: class_ffNN
@@ -23,7 +23,7 @@ SE
 # columns: 1
 # name: <cell-element>
 # type: scalar
-4
+6
 
 
 
@@ -36,8 +36,8 @@ SE
 # name: <cell-element>
 # type: matrix
 # rows: 1
-# columns: 4
- 798.4022465952992 4293472.781876395 19740713055.53304 88738999625851.53
+# columns: 6
+ 798.4022465952992 4293472.781876395 19740713055.53304 88738999625851.53 3.981966623284372e+017 1.787340744311548e+021
 
 
 
@@ -50,8 +50,8 @@ SE
 # name: <cell-element>
 # type: matrix
 # rows: 1
-# columns: 4
- 2020.6 4688398.2 12660963605.8 39493290784041
+# columns: 6
+ 2020.6 4688398.2 12660963605.8 39493290784041 1.386578763439269e+017 5.3051096377124e+020
 
 
 
@@ -75,7 +75,7 @@ SE
 # columns: 1
 # name: <cell-element>
 # type: scalar
-5
+7
 
 
 
@@ -114,7 +114,7 @@ linear
 # type: matrix
 # rows: 1
 # columns: 2
- 5 1
+ 7 1
 
 
 
@@ -133,13 +133,15 @@ linear
 # columns: 1
 # name: <cell-element>
 # type: matrix
-# rows: 5
+# rows: 7
 # columns: 1
- 353.2247499999999
- 109.5927549411224
- 76.37317939357092
- 7.520983682322549
- -68.96821819273563
+ 357.173042542099
+ 66.02836891957429
+ 43.51351716990418
+ 21.38848666798552
+ 3.684768689013981
+ -8.923890099358927
+ -17.40692858646658
 
 
 

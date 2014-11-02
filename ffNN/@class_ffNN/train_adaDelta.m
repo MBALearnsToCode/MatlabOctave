@@ -554,7 +554,8 @@ fprintf('\n\n   RESULTS:   Training Finished w/ Following Avg Costs (excl Weight
          testAccuracyAvg_text = sprintf...
             (' (%.3g%%)', 100 * testAccuracyAvg);
       else
-         testAccuracyAvg_text = '';
+         testAccuracyAvg_text = sprintf(' (%.3g)', ...
+            sqrt(2 * testCostAvg_exclWeightPenalty));
       endif
       
       fprintf('      Test: %.3g%s', ...
