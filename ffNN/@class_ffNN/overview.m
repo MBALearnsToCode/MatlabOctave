@@ -19,6 +19,6 @@ function overview(ffNN)
    
    fprintf('   No. of Weights: %i\n', ffNN.numWeights);
    
-   fprintf('   Cost Function: %s\n', ffNN.costFuncType);
+   fprintf('   Cost Function: %s\n\n', ffNN.costFuncType);
       
 endfunction

@@ -124,7 +124,7 @@ function [ffNN_avgWeights ...
    saveFileName_upper = upper(saveFileName);
   
    overview(ffNN);
-fprintf('\n\nTRAIN FORWARD-FEEDING NEURAL NETWORK (FFNN) (METHOD: RMSPROP):\n\n');
+fprintf('\nTRAIN FORWARD-FEEDING NEURAL NETWORK (FFNN) (METHOD: RMSPROP):\n\n');
    fprintf('   DATA SETS:\n');
    fprintf('      Training: %i cases\n', ...
       size(trainTargetOutput, 1));

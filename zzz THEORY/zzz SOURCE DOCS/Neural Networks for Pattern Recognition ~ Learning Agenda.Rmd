@@ -29,8 +29,8 @@ HOMEWORK:
 
 1. Neural Networks with Logistic Transformation Functions
 2. EXAMPLE: Learning Logical Functions AND & OR
-3. How Neural Networks Learn: Forward Propagation & Backward Propagation
-4. EXAMPLE: Learning Complicated, Many-Variable Logical Combinations
+3. EXAMPLE: Learning Complicated, Many-Variable Logical Combinations
+4. How Neural Networks Learn: Forward Propagation & Backward Propagation
 5. EXAMPLE: Learning Hand-Written Digits: Number 3 vs. Not Number 3
 
 HOMEWORK:
