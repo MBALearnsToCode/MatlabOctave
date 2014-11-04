@@ -9,6 +9,9 @@ function f = ...
 
       case ('logistic')
          f = costOverOutputGrad .* funcDeriv_effForm;
+         
+      case ('tanh')
+         f = costOverOutputGrad .* funcDeriv_effForm;
 
       case ('softmax')
          f = permute(arrSumAcrossDims(arrRepAcrossNewDims...
