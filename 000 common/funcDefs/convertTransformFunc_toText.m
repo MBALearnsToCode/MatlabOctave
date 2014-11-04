@@ -14,6 +14,12 @@ function f = convertTransformFunc_toText(transformFunc)
             f = strcat(f, 'NoBias');
          endif
          
+      case ('tanh')
+         f = 'tanh';
+         if ~(transformFunc.addBias)
+            f = strcat(f, 'NoBias');
+         endif
+         
       case ('softmax')
          f = 'softmax';
          if ~(transformFunc.addBias)

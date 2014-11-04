@@ -6,6 +6,8 @@ function f = costFuncType_forTransformFuncType...
          f = 'SE';
       case ('logistic')
          f = 'CE-L';
+      case ('tanh')
+         f = '';
       case ('softmax')
          f = 'CE-S';
       case ('Embed Class Indices in Real Features')

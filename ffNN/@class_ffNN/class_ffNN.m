@@ -34,9 +34,12 @@ function c = class_ffNN(inputDimSizes_perCase_vec, ...
    transformFuncs = transformFuncs_list;
    numTransformFuncs_specified = length(transformFuncs_list);
    for (l = ...
-      (numTransformFuncs_specified + 1) : numTransforms)
-      transformFuncs{l} = 'logistic';
+      (numTransformFuncs_specified + 1) : (numTransforms - 1))
+      transformFuncs{l} = 'tanh';
    endfor
+   if (length(transformFuncs) == (numTransforms - 1))
+      transformFuncs(numTransforms) = 'logistic';
+   endif
       
    if ~iscell...
       (addlLayersNumsNodes_vec_OR_weightDimSizes_list)      

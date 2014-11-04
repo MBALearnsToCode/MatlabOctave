@@ -11,7 +11,12 @@ function f = convertText_toTransformFunc(transformFunc_name)
          f = logistic_transformFuncHandles;
       case ('logisticNoBias')
          f = logistic_transformFuncHandles(false);
-
+         
+      case ('tanh')
+         f = tanh_transformFuncHandles;
+      case ('tanhNoBias')   
+         f = tanh_transformFuncHandles(false);
+         
       case ('softmax')
          f = softmax_transformFuncHandles;
       case ('softmaxNoBias')
