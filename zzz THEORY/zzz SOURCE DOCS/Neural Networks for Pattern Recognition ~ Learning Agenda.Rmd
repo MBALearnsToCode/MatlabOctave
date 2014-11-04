@@ -27,7 +27,7 @@ HOMEWORK:
 
 ### SESSION 2
 
-1. Neural Networks with Logistic Transformation Functions
+1. Neural Networks with Logistic/Tanh Transformation Functions
 2. EXAMPLE: Learning Logical Functions AND & OR
 3. EXAMPLE: Learning Complicated, Many-Variable Logical Combinations
 4. How Neural Networks Learn: Forward Propagation & Backward Propagation
