@@ -76,8 +76,10 @@ function ffNN_housePrices_multiLinReg...
    % EXPERIMENT 1
    fprintf('RUN 1: Linear Regression without Weight Regularization:\n\n');
    % Linear regression coefficients - analytic solution
+   fprintf('Weights:\n');
    weights_analytic_normalized = linRegWeights_analytic...
-      (y_train, X_train_normalized);
+      (y_train, X_train_normalized)   
+   
    % Calculate predicted values
    h_train = ...
       [ones(numCases_train, 1), X_train_normalized] ...
@@ -124,8 +126,9 @@ function ffNN_housePrices_multiLinReg...
    
    if (run2)
    
+      fprintf('Weights:\n');
       weights_analytic_normalized = linRegWeights_analytic...
-         (y_train, X_train_normalized, weightRegulParam);
+         (y_train, X_train_normalized, weightRegulParam)
          
       % Calculate predicted values
       h_train = ...
@@ -198,6 +201,9 @@ function ffNN_housePrices_multiLinReg...
             {{'L2'} [weightRegulParam]}, ... % weight penalty parameter in []
          connectProbs___ = [1.0], ...
          bestStop___ = true);
+         
+      fprintf('Weights:\n');
+      ffNN.weights
       
    endif
    
@@ -264,6 +270,7 @@ function ffNN_housePrices_multiLinReg...
          bestStop___ = true);
       
       # extract trained FFNN's weights
+      fprintf('Weights:\n');
       w = ffNN.weights;
       weights_normalized = w{1};
       
