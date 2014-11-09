@@ -271,7 +271,7 @@ function ffNN_housePrices_multiLinReg...
       
       # extract trained FFNN's weights
       fprintf('Weights:\n');
-      w = ffNN.weights;
+      w = ffNN.weights
       weights_normalized = w{1};
       
       % Calculate predicted values
