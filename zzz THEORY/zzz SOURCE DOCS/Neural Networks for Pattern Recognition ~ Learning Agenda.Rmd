@@ -28,7 +28,8 @@ HOMEWORK:
 2. EXAMPLE: Learning Logical Functions AND & OR
 3. EXAMPLE: Learning Complicated, Many-Variable Logical Combinations
 4. How Neural Networks Learn: Forward Propagation & Backward Propagation
-5. EXAMPLE: Learning Hand-Written Digits; Hidden Layer as Extracted Features
+5. Softmax Transformation Function for Multi-Class Classification; Comparison with Collection of One-vs.-All Binary Classifiers
+6. EXAMPLE: Learning Hand-Written Digits; Hidden Layer as Extracted Features
 
 HOMEWORK:
 
@@ -39,11 +40,5 @@ HOMEWORK:
 ### SESSION 3
 
 1. CASE STUDY DISCUSSION: Google Self-Driving Car
-2. Softmax Transformation Function for Multi-Class Classification; Comparison with Collection of One-vs.-All Binary Classifiers
-3. Briefing on Final Exam (Live Team Competition)
-
-
-
-### SESSION 4
-
-Final Exam (Live Team Competition): Human Activity Tracking Dataset for Classifying Quality of Bicep Curls
+2. Briefing on Final Exam (Live Team Competition)
+3. Final Exam (Live Team Competition): Human Activity Tracking Dataset for Classifying Quality of Bicep Curls

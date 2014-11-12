@@ -110,7 +110,7 @@ fprintf('      Training Batches per Epoch: %i batches of %i', ...
    fprintf('      Conjugate Gradient Iterations per Batch: %i\n', ...
       numIters_perBatch); 
 
-   fprintf('      Weight Penalty Methods & Parameters:\n');
+   fprintf('      Weight Connectivity Probabilities, Penalty Methods & Penalty Terms:\n');
    weightRegulFuncs = weightRegulArgs_list{1};
    weightRegulParams = weightRegulArgs_list{2};
    for (l = 1 : numTransforms)

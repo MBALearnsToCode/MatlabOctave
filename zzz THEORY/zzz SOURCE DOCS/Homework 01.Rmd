@@ -11,7 +11,7 @@ fontsize: 12pt
 
 Select a choice **A** / **B** / **C**, etc., or indicate **TRUE** / **FALSE** for the following questions:
 
-1. The #1 criterion for judging a supervised ML model is whether it explains/interprets what's going on in the Training data set
+1. The #1 criterion for judging a supervised ML model is how well it explains/interprets what's going on in the Training data set
 
 2. A pair of Learning Curves track a supervised ML model's performances on the Training and Test data sets
 
@@ -25,7 +25,7 @@ Answer the following questions in < length of 3 tweets:
 
 1. What does a cost function $c(...)$ do? What goes into $(...)$? What are $c$'s lower and upper numerical limits?
 
-2. LOGISTIC REGRESSION: "signal" $z_i = w_0 \cdot 1 + w_1 x_{1i} + w_2 x_{2i} + \dots + w_k x_{ki}$, hypothetical prediction $h_i = f(z_i)$. Why is $h_i = \frac {1} {1 + \text{exp}(-z_i)}$ a good function for Logistic Regression? Why is $c_i = - y_i \text{ln} h_i - (1 - y_i) \text{ln} (1 - h_i)$ a good cost function?
+2. LOGISTIC REGRESSION: "signal" $z_i = w_0 \cdot 1 + w_1 x_{1i} + w_2 x_{2i} + \dots + w_k x_{ki}$, hypothetical prediction $h_i = f(z_i)$. Why is the **logistic function** $h_i = \frac {1} {1 + \text{exp}(-z_i)}$ a good function for Logistic Regression? Why is the **cross-entropy cost function** $c_i = - y_i \text{ln} h_i - (1 - y_i) \text{ln} (1 - h_i)$ a good cost function?
 
 3. What is a Big Risk when building a Big Machine that consumes Big Data containing many many variables? Name 2 ways to mitigate that problem.  
 
