@@ -1,6 +1,6 @@
 function ffNN = ffNN_handwrittenDigits...
    (numsHid = 300, weightPenaltyTerm = 0, ...
-   numIters_perBatch = 9, numEpochs = 30, bestStop = true); 
+   numIters_perBatch = 10, numEpochs = 30, bestStop = true); 
    
    close all;
    
