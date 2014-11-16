@@ -1,0 +1,212 @@
+# Created by Octave 3.8.2, Sun Nov 16 12:29:51 2014 Central Standard Time <unknown@MBALearnsToCode>
+# name: ffNN_file
+# type: class
+# classname: class_ffNN
+# length: 10
+# name: costFuncType
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 4
+CE-L
+
+
+
+
+
+# name: func_convertInput_toNum
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 4
+self
+
+
+
+
+
+# name: inputDimSizes_perCase
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar
+54
+
+
+
+
+
+# name: normalizeDivide
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar
+1
+
+
+
+
+
+# name: normalizeSubtract
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar
+0
+
+
+
+
+
+# name: numTransforms
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar
+1
+
+
+
+
+
+# name: numWeights
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar
+55
+
+
+
+
+
+# name: transformFuncs
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 8
+logistic
+
+
+
+
+
+
+
+
+# name: weightDimSizes
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: matrix
+# rows: 1
+# columns: 2
+ 55 1
+
+
+
+
+
+
+
+
+# name: weights
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: matrix
+# rows: 55
+# columns: 1
+ 0.1111288536383579
+ -0.02052802809232017
+ 0.0537454515235829
+ -0.1475633021373414
+ -0.0371970566355293
+ -0.08262614902393788
+ -0.03862601461919141
+ -0.01270117746272147
+ -0.02705774821699339
+ -0.02993749291186366
+ -0.1104873517363789
+ -0.000891583835024433
+ -0.0407036809213984
+ -0.01324993417094968
+ -0.08174719180717707
+ -0.05294634051889803
+ -0.009316769726353124
+ -0.008131452069495776
+ -0.0140495661599666
+ -0.0235855781700538
+ -0.04945541738830059
+ -0.08682604864155252
+ -0.0001206769637526961
+ -0.01849772088279491
+ 3.28689012497445e-005
+ -0.02332461381012632
+ -0.009441133249791235
+ -0.07273811279331764
+ -0.05749534171145967
+ -0.006772612795592621
+ -0.005239174509603787
+ -0.004960905261612754
+ -0.005958828906511041
+ -0.01192349835338053
+ -0.01628553550419872
+ -0.05218087147123432
+ -0.07391261702647441
+ -0.001759229951127233
+ -0.009552871290914621
+ 0.0004490173986084929
+ -0.00857515732314946
+ -0.001152307466050943
+ -0.01557919109204873
+ -0.006934106975600658
+ -0.0630272042148816
+ -0.05881290732510792
+ -0.005894220060012466
+ -0.003895141851001875
+ -0.001784640243065534
+ -0.002616074515512887
+ -0.003872916605330087
+ -0.003920584904005013
+ -0.009595761264150007
+ -0.01072915141026461
+ -0.04955622333718791
+
+
+
+
+
+
+
+
+
+

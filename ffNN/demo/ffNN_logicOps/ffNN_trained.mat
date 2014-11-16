@@ -1,0 +1,170 @@
+# Created by Octave 3.8.2, Sun Nov 16 12:35:11 2014 Central Standard Time <unknown@MBALearnsToCode>
+# name: ffNN_file
+# type: class
+# classname: class_ffNN
+# length: 10
+# name: costFuncType
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 4
+CE-L
+
+
+
+
+
+# name: func_convertInput_toNum
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 4
+self
+
+
+
+
+
+# name: inputDimSizes_perCase
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar
+12
+
+
+
+
+
+# name: normalizeDivide
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar
+1
+
+
+
+
+
+# name: normalizeSubtract
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar
+0
+
+
+
+
+
+# name: numTransforms
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar
+1
+
+
+
+
+
+# name: numWeights
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar
+13
+
+
+
+
+
+# name: transformFuncs
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 8
+logistic
+
+
+
+
+
+
+
+
+# name: weightDimSizes
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: matrix
+# rows: 1
+# columns: 2
+ 13 1
+
+
+
+
+
+
+
+
+# name: weights
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: matrix
+# rows: 13
+# columns: 1
+ -26.12548525246912
+ -0.1277606241061781
+ -0.09678161934338157
+ -0.2761115023768464
+ -0.4434578566238791
+ -0.3988086586381153
+ -2.007200065500879
+ 1.665423778902251
+ 1.907707892755444
+ -8.400200313454341
+ -8.402594246144666
+ 20.02986138318203
+ 20.00270015769852
+
+
+
+
+
+
+
+
+
+

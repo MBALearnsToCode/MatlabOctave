@@ -1,0 +1,284 @@
+---
+title: 'Forward-Feeding Neural Networks (FFNNs): Forward & Backward Passes'
+output: pdf_document
+fontsize: 12
+geometry: margin=1.5cm
+---
+
+
+
+*STUFF TO KNOW BY HEART - EVEN WHEN DRUNK!*
+
+*1. FFNNs are **supervised** learning models*
+
+*2. An FFNN consists of **layers** of **transformation functions** and **weights***
+
+*3. FFNNs' **forward pass** models **hypothesized output***
+
+*4. FFNNs' **backward pass** computes **partial derivatives** of cost function with respect to weight layers, for use in mathematical optimization*
+
+
+
+### MODEL STRUCTURE / HYPOTHETICAL PREDICTION: FORWARD PASS
+In a generalized sense, an FFNN models Hypothesized Output $\mathbf H = h(\mathbf X , \mathbf W ^{\left[ 1 \right]}, \mathbf W ^{\left[ 2 \right]}, \dotsc, \mathbf W ^{\left[ L \right]})$ through 1 input layer and $L$ additional layers of transformation functions and parameters (called "weights") in the following manner:
+
+$$
+\begin{aligned}
+      & \text{network layer 1: } \mathbf A^{\left[ 1 \right]} =
+            \text{Input } \mathbf X \\     
+      & \text{network layer 2: } \mathbf A^{\left[ 2 \right]} =
+            f^{\left[ 1 \right]}
+            (\mathbf A^{\left[ 1 \right]}, \mathbf W^{\left[ 1 \right]}) \\
+      & \text{network layer 3: } \mathbf A^{\left[ 3 \right]} =
+            f^{\left[ 2 \right]}
+            (\mathbf A^{\left[ 2 \right]}, \mathbf W^{\left[ 2 \right]}) \\
+      & \dots \\
+      & \text{network layer } (L + 1) \text{: }
+            \mathbf H = \mathbf A^{\left[ L + 1 \right]} =
+            f^{\left[ L \right]}
+            (\mathbf A^{\left[ L \right]}, \mathbf W^{\left[ L \right]})
+\end{aligned}
+$$
+
+where:
+
+* $\mathbf A$'s are called the layers' "**activations**" and inter-layer parameters $\mathbf W$'s are called "**weights**". The way the FFNN computes $\mathbf H$ from input $\mathbf X$ through layers of transformation functions and weights is called the "**forward pass**".
+
+* Each "**forward function**" $f$ is a structurally pre-defined transformation function $\mathbf{Output} = f(\mathbf{Input}, \mathbf{Parameter})$ such that, given partial derivative $\frac {\partial v} {\partial \mathbf{Output}}$ of a scalar variable $v$ with respect to $\mathbf{Output}$, the following partial derivatives with respect to $\mathbf{Input}$ and $\mathbf{Parameter}$ can be computed by certain "**backward functions**" $b_{Input}$ and $b_{Parameter}$:
+
+$$
+\begin{aligned}
+      & \frac {\partial v} {\partial \mathbf{Input}} =
+            b_{Input}(\frac {\partial v} {\partial \mathbf{Output}}, 
+            \text{local state}) \\
+      & \frac {\partial v} {\partial \mathbf{Parameter}} =
+            b_{Parameter}(\frac {\partial v} {\partial \mathbf{Output}}, 
+            \text{local state}) \\
+      & \text{where the term "local state" refers to current values} \\
+      & \text{of function } f \text{'s }
+            \mathbf{Input} \text{, } \mathbf{Parameter} \text{ and }
+            \mathbf{Output} \\
+      \\
+      & \text{(for each neural network layer $l$, we henceforth denote} \\
+      & \text{its corresponding "backward functions" $b^{\left[ l \right]}_A$ and $b^{\left[ l \right]}_W$)}
+\end{aligned}
+$$
+
+The purpose of knowing such partial derivatives will become clear later when we discuss the "**backward pass**" or "**backpropagation**" procedure.
+
+
+
+### BACKWARD PASS / BACKPROPAGATION PROCEDURE TO DERIVE $\frac {\partial c} {\partial \mathbf W^{\left[ l \right]}}$ FOR EACH LAYER $l$ (for use in optimization)
+With the structure of the transformation functions $f$'s fixed, in the learning/training process, our job is to adjust/update the values of weight layers $\mathbf W ^{\left[ 1 \right]}$, $\mathbf W ^{\left[ 2 \right]}$, ..., $\mathbf W ^{\left[ L \right]}$ so as to make the cost function $c(\mathbf H, \mathbf Y)$ decrease. This invariably requires us to know or be able to estimate the partial derivative $\frac {\partial c} {\partial \mathbf W^{\left[ l \right]}}$ for each layer $l$. We can compute such partial derivatives through the following "backpropagating" procedure:
+<br>
+
+$$
+\begin{aligned}
+      \begin{split}
+            & \frac {\partial c} {\partial \mathbf A^{\left[ L + 1 \right]}} =
+                  \frac {\partial c} {\partial \mathbf H} =
+                  d(\mathbf H, \mathbf Y)
+            \\
+            \Downarrow
+            \\
+            & \frac {\partial c} {\partial \mathbf A^{\left[ L \right]}} =
+                  b^{\left[ L \right]}_A(
+                  \frac {\partial c} {\partial \mathbf A^{\left[ L + 1 \right]}}, 
+                  \text{local state})
+            \\
+            \Downarrow
+            \\
+            & \frac {\partial c} {\partial \mathbf A^{\left[ L-1 \right]}} =
+                  b^{\left[ L-1 \right]}_A(
+                  \frac {\partial c} {\partial \mathbf A^{\left[ L \right]}}, 
+                  \text{local state})
+            \\
+            \Downarrow
+            \\
+            \dots
+            \\
+            \Downarrow
+            \\
+            & \frac {\partial c} {\partial \mathbf A^{\left[ 2 \right]}} =
+                  b^{\left[ 2 \right]}_A(
+                  \frac {\partial c} {\partial \mathbf A^{\left[ 3 \right]}}, 
+                  \text{local state})
+      \end{split}
+      \begin{split}
+            & \hspace{1 pc} \Rightarrow \hspace{1 pc}
+                  \frac {\partial c} {\partial \mathbf W^{\left[ L \right]}} =
+                  b^{\left[ L \right]}_W(
+                  \frac {\partial c} {\partial \mathbf A^{\left[ L + 1 \right]}}, 
+                  \text{local state})
+            \\
+            \\
+            & \hspace{1 pc} \Rightarrow \hspace{1 pc}
+                  \frac {\partial c}
+                        {\partial \mathbf W^{\left[ L-1 \right]}} =
+                  b^{\left[ L-1 \right]}_W(
+                  \frac {\partial c} {\partial \mathbf A^{\left[ L \right]}}, 
+                  \text{local state})
+            \\
+            \\
+            & \hspace{1 pc} \Rightarrow \hspace{1 pc}
+                  \frac {\partial c}
+                        {\partial \mathbf W^{\left[ L-2 \right]}} =
+                  b^{\left[ L-2 \right]}_W(
+                  \frac {\partial c} {\partial \mathbf A^{\left[ L-1 \right]}}, 
+                  \text{local state})
+            \\
+            \\
+            \\
+            \\
+            & \hspace{1 pc} \Rightarrow \hspace{1 pc}
+                  \frac {\partial c}
+                        {\partial \mathbf W^{\left[ 1 \right]}} =
+                  b^{\left[ 1 \right]}_W(
+                  \frac {\partial c} {\partial \mathbf A^{\left[ 2 \right]}}, 
+                  \text{local state})
+      \end{split}
+\end{aligned}
+$$
+
+
+
+### ILLUSTRATION OF FORWARD & BACKWARD PASSES
+$$
+\begin{aligned}
+      \begin{split}
+            \mathbf X = \mathbf A^{\left[ 1 \right]} \\
+            \\
+            \text{(FORWARD} \\
+            \text{PASS)} \\
+            \\ \\ \\ \\ \\ \\ \\ \\ \\
+      \end{split}
+      \begin{split}
+            \xrightarrow[(W^{\left[ 1 \right]})]{f^{\left[ 1 \right]}} \\
+            \\ \\ \\ \\ \\ \\ \\
+            \frac {\partial c}{\partial \mathbf W^{\left[ 1 \right]}} \\      
+            _{b^{\left[ 1 \right]}_W} \nwarrow \\
+            \\ \\
+      \end{split}
+      \begin{split}
+            \mathbf A^{\left[ 2 \right]} \\
+            \\
+            | \\
+            | \\
+            | \\
+            \text{layer} \\
+            1 \\
+            | \\
+            | \\
+            | \\
+            \\
+            \frac {\partial c}{\partial \mathbf A^{\left[ 2 \right]}}
+      \end{split}
+      \begin{split}
+            \xrightarrow[(W^{\left[ 2 \right]})]{f^{\left[ 2 \right]}} \\
+            \\ \\ \\ \\ \\ \\ \\
+            \frac {\partial c}{\partial \mathbf W^{\left[ 2 \right]}} \\      
+            _{b^{\left[ 2 \right]}_W} \nwarrow \\
+            \xleftarrow[b^{\left[ 2 \right]}_A]{ }
+      \end{split}
+      \begin{split}
+            \mathbf A^{\left[ 3 \right]} \\
+            \\
+            | \\
+            | \\
+            | \\
+            \text{layer} \\
+            2 \\
+            | \\
+            | \\
+            | \\
+            \\
+            \frac {\partial c}{\partial \mathbf A^{\left[ 3 \right]}}
+      \end{split}
+      \begin{split}
+            \xrightarrow[(W^{\left[ 3 \right]})]{f^{\left[ 3 \right]}} \\
+            \\ \\ \\ \\ \\ \\ \\
+            \frac {\partial c}{\partial \mathbf W^{\left[ 3 \right]}} \\ 
+            _{b^{\left[ 3 \right]}_W} \nwarrow \\
+            \xleftarrow[b^{\left[ 3 \right]}_A]{ }
+      \end{split}
+      \begin{split}
+            \dotsb
+            \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\
+            \dotsb
+            \\
+      \end{split}
+      \begin{split}
+            \xrightarrow[(W^{\left[ L-2 \right]})]{f^{\left[ L-2 \right]}} \\
+            \\ \\ \\ \\ \\ \\ \\
+            \frac {\partial c}{\partial \mathbf W^{\left[ L-2 \right]}} \\ 
+            _{b^{\left[ L-2 \right]}_W} \nwarrow \\
+            \xleftarrow[b^{\left[ L-2 \right]}_A]{ }
+      \end{split}
+      \begin{split}
+            \mathbf A^{\left[ L-1 \right]} \\
+            \\
+            | \\
+            | \\
+            | \\
+            \text{layer} \\
+            (L-2) \\
+            | \\
+            | \\
+            | \\
+            \\
+            \frac {\partial c}{\partial \mathbf A^{\left[ L-1 \right]}}            
+      \end{split}
+      \begin{split}
+            \xrightarrow[(W^{\left[ L-1 \right]})]{f^{\left[ L-1 \right]}} \\
+            \\ \\ \\ \\ \\ \\ \\
+            \frac {\partial c}{\partial \mathbf W^{\left[ L-1 \right]}} \\
+            _{b^{\left[ L-1 \right]}_W} \nwarrow \\
+            \xleftarrow[b^{\left[ L-1 \right]}_A]{ }
+      \end{split}
+      \begin{split}
+            \mathbf A^{\left[ L \right]} \\
+            \\
+            | \\
+            | \\
+            | \\
+            \text{layer} \\
+            (L-1) \\
+            | \\
+            | \\
+            | \\
+            \\
+            \frac {\partial c}{\partial \mathbf A^{\left[ L \right]}}            
+      \end{split}
+      \begin{split}
+            \xrightarrow[(W^{\left[ L \right]})]{f^{\left[ L \right]}} \\
+            \\ \\ \\ \\ \\ \\ \\
+            \frac {\partial c}{\partial \mathbf W^{\left[ L \right]}} \\
+            _{b^{\left[ L \right]}_W} \nwarrow \\
+            \xleftarrow[b^{\left[ L \right]}_A]{ }
+      \end{split}
+      \begin{split}
+            \mathbf A^{\left[ L + 1 \right]} \\
+            \\
+            | \\
+            | \\
+            | \\
+            \text{layer} \\
+            L \\
+            | \\
+            | \\
+            | \\
+            \\
+            \frac {\partial c}{\partial \mathbf A^{\left[ L + 1 \right]}}            
+      \end{split}
+      \begin{split}
+            & = \mathbf H 
+                  \xrightarrow{ } \text{cost: } c(\mathbf H, \mathbf Y) \\
+            \\ \\ \\ \\ \\ \\ \\
+            & \text{(BACKWARD} \\
+            & \text{PASS)} \\
+            \\
+            & = \frac {\partial c}{\partial \mathbf H} =
+                  d(\mathbf H, \mathbf Y)
+      \end{split}
+\end{aligned}
+$$
