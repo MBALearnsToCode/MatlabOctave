@@ -68,7 +68,9 @@ targetOutputs_areClassIndcsColVecs_ofNumClasses = false, ...
    
    timeStats.fProp_bProp = 0;
 
-   tic;   
+   tic;
+   func_convertInput = ffNN.func_convertInput;
+   input_Arr = func_convertInput(input_Arr);   
    activs{1} = normalizeSubtractDivide(input_Arr, ...
       ffNN.normalizeSubtract, ffNN.normalizeDivide);
    timeStats.fProp_bProp += timeStats.activs(1) = ...

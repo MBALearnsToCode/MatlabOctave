@@ -1,8 +1,6 @@
 function f = accuracyAvg_logistic(hypoArr, targetArr, ...
-   posSkewnesses = [0.5])
+   posSkewnesses = [1])
    
-   posSkewnesses(posSkewnesses >= 1) = 0.5;
-   posSkewnesses = 2 * posSkewnesses;
    negSkewnesses = 2 - posSkewnesses;
    
    numerator = arrSumAllDims(bsxfun(@rdivide, ...

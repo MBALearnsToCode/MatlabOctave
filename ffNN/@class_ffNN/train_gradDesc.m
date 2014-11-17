@@ -164,7 +164,8 @@ fprintf(',   applying Nesterov Accelerated Gradient (NAG)\n');
       switch (costFuncType)
          case ('CE-L')
             classSkewnesses(classSkewnesses >= 1) = 0.5;
-            posSkewnesses = 2 * classSkewnesses;
+            classSkewnesses *= 2;
+            posSkewnesses = classSkewnesses;
             negSkewnesses = 2 - posSkewnesses;
             balancedClasses = equalTest...
                (posSkewnesses, negSkewnesses);
@@ -172,7 +173,8 @@ fprintf(',   applying Nesterov Accelerated Gradient (NAG)\n');
                fprintf('      Balanced Classes Assumed\n');
             else
                fprintf('      Class Skewnesses: %s vs %s\n', ...
-                  mat2str(posSkewnesses / 2), mat2str(negSkewnesses / 2));
+                  mat2str(posSkewnesses / 2, 3), ...
+                  mat2str(negSkewnesses / 2, 3));
             endif
          case ('CE-S')
             classSkewnesses /= (sum(classSkewnesses) / n);      
@@ -182,7 +184,7 @@ fprintf(',   applying Nesterov Accelerated Gradient (NAG)\n');
                fprintf('      Balanced Classes Assumed\n');
             else
                fprintf('      Class Skewnesses: %s\n', ...
-                  mat2str(posSkewnesses / n));
+                  mat2str(classSkewnesses / n, 3));
             endif
       endswitch   
    endif
@@ -489,13 +491,15 @@ fprintf('\n\n   RESULTS:   Training Finished w/ Following Avg Costs (excl Weight
       pred = predict(ffNN_avgWeights, trainInput_batch);
       switch (costFuncType)
          case ('CE-L')               
-            acc = binClassifAccuracy(pred, ...
-               trainTargetOutput_batch);
+            acc = accuracyAvg_logistic(pred, ...
+               trainTargetOutput_batch, ...
+               classSkewnesses);
          case ('CE-S')
-            acc = classifAccuracy(pred, ...
-               trainTargetOutput_batch);
+            acc = accuracyAvg_softmax(pred, ...
+               trainTargetOutput_batch, ...
+               classSkewnesses);
       endswitch
-      fprintf(', Actual Classification Accuracy %.3g%%', ...
+      fprintf(', Actual Unskewed Classification Accuracy %.3g%%', ...
          100 * acc);      
    endif
    
@@ -512,13 +516,15 @@ fprintf('\n\n   RESULTS:   Training Finished w/ Following Avg Costs (excl Weight
          pred = predict(ffNN_avgWeights, validInput);
          switch (costFuncType)         
             case ('CE-L')               
-               acc = binClassifAccuracy(pred, ...
-                  validTargetOutput);
+               acc = accuracyAvg_logistic(pred, ...
+                  validTargetOutput, ...
+                  classSkewnesses);
             case ('CE-S')
-               acc = classifAccuracy(pred, ...
-                  validTargetOutput);
+               acc = accuracyAvg_softmax(pred, ...
+                  validTargetOutput, ...
+                  classSkewnesses);
          endswitch
-         fprintf(', Actual Classification Accuracy %.3g%%', ...
+         fprintf(', Actual Unskewed Classification Accuracy %.3g%%', ...
             100 * acc);         
       endif
       
@@ -551,12 +557,15 @@ fprintf('\n\n   RESULTS:   Training Finished w/ Following Avg Costs (excl Weight
          pred = predict(ffNN_avgWeights, testInput);
          switch (costFuncType)         
             case ('CE-L')               
-               acc = binClassifAccuracy(pred, ...
-                  testTargetOutput);
+               acc = accuracyAvg_logistic(pred, ...
+                  testTargetOutput, ...
+                  classSkewnesses);
             case ('CE-S')
-               acc = classifAccuracy(pred, testTargetOutput);
+               acc = accuracyAvg_softmax(pred, ...
+                  testTargetOutput, ...
+                  classSkewnesses);
          endswitch
-         fprintf(', Actual Classification Accuracy %.3g%%', ...
+         fprintf(', Actual Unskewed Classification Accuracy %.3g%%', ...
             100 * acc);
       endif      
       
