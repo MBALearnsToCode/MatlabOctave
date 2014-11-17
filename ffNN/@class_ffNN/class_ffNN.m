@@ -4,7 +4,8 @@ function c = class_ffNN(inputDimSizes_perCase_vec, ...
    initWeights_rand = true, sigma_or_epsilon = 1e-3, ...
    distrib = 'normal')
 
-   c.inputDimSizes_perCase = inputDimSizes_perCase_vec;   
+   c.inputDimSizes_perCase = inputDimSizes_perCase_vec; 
+   c.func_convertInput = @self;  
    c.normalizeSubtract = 0;
    c.normalizeDivide = 1;
    c.numTransforms = 0;

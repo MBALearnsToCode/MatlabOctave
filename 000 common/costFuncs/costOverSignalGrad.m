@@ -1,14 +1,14 @@
 function f = costOverSignalGrad...
    (hypoOutput_rowMat, targetOutput_rowMat, ...
-   costFuncType = 'CE-L', skewnesses = [1])
+   costFuncType = 'CE-L', classSkewnesses = [1])
    
    [m n] = size(targetOutput_rowMat);
    
    if strcmp(costFuncType, 'CE-S')
-      for (j = (length(skewnesses) + 1) : n)
-         skewnesses(j) = skewnesses(j - 1);
+      for (j = (length(classSkewnesses) + 1) : n)
+         classSkewnesses(j) = classSkewnesses(j - 1);
       endfor
-      skewnesses /= (sum(skewnesses) / n);      
+      classSkewnesses /= (sum(classSkewnesses) / n);      
    endif   
    
    switch (costFuncType)
@@ -17,22 +17,24 @@ function f = costOverSignalGrad...
          f = (hypoOutput_rowMat - targetOutput_rowMat) / m;
          
       case ('CE-L')
+         posSkewnesses = classSkewnesses;
+         negSkewnesses = 2 - posSkewnesses;
          balancedClasses = ...
-            equalTest(skewnesses, 2 - skewnesses);
+            equalTest(posSkewnesses, negSkewnesses);
          if (balancedClasses)
             f = (hypoOutput_rowMat - targetOutput_rowMat) / m;
          else
             f = (bsxfun(@rdivide, ...
                targetOutput_rowMat .* (hypoOutput_rowMat - 1), ...
-               skewnesses) ...
+               posSkewnesses) ...
                + bsxfun(@rdivide, ...
                (1 - targetOutput_rowMat) .* hypoOutput_rowMat, ...
-               2 - skewnesses)) / m;
+               negSkewnesses)) / m;
          endif
       
       case ('CE-S')
-         balancedClasses = ...
-            equalTest(max(skewnesses), min(skewnesses));
+         balancedClasses = equalTest...
+            (max(classSkewnesses), min(classSkewnesses));
          if (balancedClasses)
             f = (hypoOutput_rowMat - targetOutput_rowMat) / m;
          else
@@ -44,12 +46,12 @@ function f = costOverSignalGrad...
                (targetOutput_rowMat, 2, n), [1 3 2]);
             iMat_rep = permute(arrRepAcrossNewDims...
                (eye(n), 2, m), [3 1 2]);
-            skewnesses_rep = permute(arrRepAcrossNewDims...
-               (repmat(skewnesses, [m 1]), 2, n), [1 3 2]);
+            classSkewnesses_rep = permute(arrRepAcrossNewDims...
+               (repmat(classSkewnesses, [m 1]), 2, n), [1 3 2]);
             f = arrSumAcrossDims...                        
                ((targetOutput_rep ...
                .* (hypoOutput_rep - iMat_rep)) ...
-               ./ skewnesses_rep, 3) / m;
+               ./ classSkewnesses_rep, 3) / m;
          endif
          
    endswitch

@@ -1,5 +1,7 @@
-function f = crossEntropy(fromArr, ofArr, tiny = exp(-36))
+function f = crossEntropy(fromArr, ofArr, ...
+   classSkewnesses = [1], tiny = exp(-36))
   
-   f = - arrSumAllDims(fromArr .* log(ofArr + tiny));
+   f = - arrSumAllDims(bsxfun(@rdivide, ...
+      fromArr .* log(ofArr + tiny), classSkewnesses));
 
-end
+endfunction
