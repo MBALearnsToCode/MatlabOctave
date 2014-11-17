@@ -4,10 +4,10 @@ function f = costOverSignalGrad...
    
    [m n] = size(targetOutput_rowMat);
    
-   if strcmp(costFuncType, 'CE-S')
-      for (j = (length(classSkewnesses) + 1) : n)
-         classSkewnesses(j) = classSkewnesses(j - 1);
-      endfor
+   for (j = (length(classSkewnesses) + 1) : n)
+      classSkewnesses(j) = classSkewnesses(j - 1);
+   endfor
+   if strcmp(costFuncType, 'CE-S')      
       classSkewnesses /= (sum(classSkewnesses) / n);      
    endif   
    

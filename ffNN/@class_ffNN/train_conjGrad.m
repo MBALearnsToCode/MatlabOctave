@@ -145,7 +145,8 @@ fprintf('      Training Batches per Epoch: %i batches of %i', ...
       endfor    
       switch (costFuncType)
          case ('CE-L')
-            posSkewnesses = classSkewnesses;
+            classSkewnesses(classSkewnesses >= 1) = 0.5;
+            posSkewnesses = 2 * classSkewnesses;
             negSkewnesses = 2 - posSkewnesses;
             balancedClasses = equalTest...
                (posSkewnesses, negSkewnesses);

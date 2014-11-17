@@ -16,10 +16,10 @@ targetOutputs_areClassIndcsColVecs_ofNumClasses = false, ...
    costFuncType_isCrossEntropy = ...
       strcmp(costFuncType, 'CE-L') || ...
       strcmp(costFuncType, 'CE-S');
-   if strcmp(costFuncType, 'CE-S')
-      for (j = (length(classSkewnesses) + 1) : n)
-         classSkewnesses(j) = classSkewnesses(j - 1);
-      endfor
+   for (j = (length(classSkewnesses) + 1) : n)
+      classSkewnesses(j) = classSkewnesses(j - 1);
+   endfor
+   if strcmp(costFuncType, 'CE-S')      
       classSkewnesses /= sum(classSkewnesses) / n;
    endif   
    

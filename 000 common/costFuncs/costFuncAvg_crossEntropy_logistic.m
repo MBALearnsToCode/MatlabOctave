@@ -1,7 +1,9 @@
 function f = costFuncAvg_crossEntropy_logistic...
-   (hypoArr, targetArr, posSkewnesses = [1], ...
+   (hypoArr, targetArr, posSkewnesses = [0.5], ...
    returnGrad = false, casesDim = 1)
-
+   
+   posSkewnesses(posSkewnesses >= 1) = 0.5;
+   posSkewnesses = 2 * posSkewnesses;
    negSkewnesses = 2 - posSkewnesses;
    
    m = size(targetArr, casesDim);
