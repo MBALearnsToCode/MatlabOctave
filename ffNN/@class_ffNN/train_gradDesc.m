@@ -26,7 +26,7 @@ function [ffNN_avgWeights ...
       connectProbs);
    numTransforms = ffNN.numTransforms;
    weightDimSizes = ffNN.weightDimSizes;
-   numTargets = columns(weightDimSizes{numTransforms});
+   n = weightDimSizes{numTransforms}(2);
    costFuncType = ffNN.costFuncType;
    costFuncType_isCrossEntropy = ...
       strcmp(costFuncType, 'CE-L') || ...
@@ -156,6 +156,35 @@ fprintf(',   applying Nesterov Accelerated Gradient (NAG)\n');
          100 * connectProbs(l), weightRegulFuncs{l}, ...
          weightRegulParam_print);
    endfor
+
+   if (costFuncType_isCrossEntropy)
+      for (j = (length(classSkewnesses) + 1) : n)
+         classSkewnesses(j) = classSkewnesses(j - 1);
+      endfor    
+      switch (costFuncType)
+         case ('CE-L')
+            posSkewnesses = classSkewnesses;
+            negSkewnesses = 2 - posSkewnesses;
+            balancedClasses = equalTest...
+               (posSkewnesses, negSkewnesses);
+            if balancedClasses
+               fprintf('      Balanced Classes Assumed\n');
+            else
+               fprintf('      Class Skewnesses: %s vs %s\n', ...
+                  mat2str(posSkewnesses / 2), mat2str(negSkewnesses / 2));
+            endif
+         case ('CE-S')
+            classSkewnesses /= (sum(classSkewnesses) / n);      
+            balancedClasses = equalTest...
+               (max(classSkewnesses), min(classSkewnesses));
+            if balancedClasses
+               fprintf('      Balanced Classes Assumed\n');
+            else
+               fprintf('      Class Skewnesses: %s\n', ...
+                  mat2str(posSkewnesses / n));
+            endif
+      endswitch   
+   endif
    
    if (bestStop)
 fprintf('      Model Selection by Best Validation Performance\n');
@@ -174,7 +203,7 @@ fprintf('      Validation Avg Cost (excl Weight Penalty) updated every %i batche
       validCostCalcInterval_numChunks ...
       * trainCostApproxChunk_numBatches);
    if (costFuncType_isCrossEntropy)
-fprintf('         (Classification Confidence %%s in brackets)\n');
+fprintf('         (Unskewed Classification Confidence %%s in brackets)\n');
 else
 fprintf('         (Root Mean Square Error (RMSE) in brackets)\n');
    endif
