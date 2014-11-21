@@ -1,0 +1,30 @@
+---
+title: 'Neural Networks for Pattern Recognition: Homework 02'
+geometry: margin=1.5cm
+output: pdf_document
+fontsize: 12pt
+---
+
+
+
+### I. MULTIPLE CHOICE / TRUE-FALSE
+
+Select a choice **A** / **B** / **C**, etc., or indicate **TRUE** / **FALSE** for the following questions:
+
+1. A Logistic Regression model (i.e. a simple 2-layer logistic Neural Network) is capable of learning complex combinations of logical functions AND, OR and NOT
+
+2. A machine's capacity depends only on its number of input variables
+
+3. The backward pass in a Neural Network is a prerequisite for the network's learning capability
+
+
+
+### II. WRITTEN
+
+Watch the following 2 videos [**Google's driverless car**](http://www.youtube.com/watch?v=TsaES--OTzM) and [**its crude but pioneering granddaddy**](http://www.youtube.com/watch?v=VwwB6xcx8Wg), and briefly answer the following:
+
+1. First, assume a simple self-driving system that takes only front-view images as input. How can one train the vehicle to automatically turn on the head lights when it's dark? 
+
+2. An autonomous car should be trained by many different drivers. Discuss why.
+
+3. When should an autonomous vehicle automatically alert a front-sitting passenger to take control for increased safety?

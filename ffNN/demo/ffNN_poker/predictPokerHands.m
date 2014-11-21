@@ -13,14 +13,20 @@ function f = predictPokerHands(pokerHands_texts = '', ...
           'Jc 8c Ac 0c 9c', ...
           '4c 5c 6c 7c Kc', ...
           '4d 5d 6d 7d 0d', ...
-          'Ks Jd Qd 0h As'}
+          'Ks Jd Qd 0h As', ...
+          'Ac 8d Ad As Ah', ...
+          '2h 3h 4h 5h 6h'}
    else
       pokerHands_texts      
-   endif
+   endif   
    pokerHands = convertTexts_toPokerHands(pokerHands_texts);
    pokerHands_labels = predict(ffNN, pokerHands);
-   for i = 1 : length(pokerHands_labels)
-      f{i} = const_pokerHandLabels(){pokerHands_labels(i)};
-   endfor
+   if iscell(pokerHands)
+      for i = 1 : length(pokerHands_labels)
+         f{i} = const_pokerHandLabels(){pokerHands_labels(i)};
+      endfor
+   else
+      f = const_pokerHandLabels(){pokerHands_labels};
+   endif
    
 endfunction
