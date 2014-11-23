@@ -2,7 +2,7 @@
 title: 'Neural Networks for Pattern Recognition: Agenda'
 output: pdf_document
 fontsize: 12pt
-geometry: margin=1.5cm
+geometry: margin=0.9cm
 ---
 
 
@@ -26,10 +26,11 @@ HOMEWORK:
 
 1. Neural Networks with Logistic/Tanh Transformation Functions
 2. EXAMPLE: Learning Logical Functions AND & OR
-3. EXAMPLE: Learning Complicated, Many-Variable Logical Combinations
-4. How Neural Networks Learn: Forward Propagation & Backward Propagation
-5. Softmax Transformation Function for Multi-Class Classification; Comparison with Collection of One-vs.-All Binary Classifiers
-6. EXAMPLE: Learning Hand-Written Digits; Hidden Layer as Extracted Features
+3. EXAMPLE: Learning Complicated, Many-Variable AND & OR Logical Combinations
+4. EXAMPLE: Learning Hand-Written Digits; Hidden Layer Nodes as Feature Detectors
+5. How Neural Networks Learn: Forward Propagation & Backward Propagation
+6. Softmax Transformation Function for Multi-Class Classification; Comparison with Collection of One-vs.-All Binary Classifiers
+
 
 HOMEWORK:
 
@@ -40,5 +41,5 @@ HOMEWORK:
 ### SESSION 3
 
 1. CASE STUDY DISCUSSION: Google Self-Driving Car
-2. Briefing on Final Exam (Live Team Competition)
-3. Final Exam (Live Team Competition): Human Activity Tracking Dataset for Classifying Quality of Bicep Curls
+2. EXAMPLE: Learning Poker Hands; Challenges Posed by Skewed Classes; Mini-Batch Learning
+3. FINAL EXAM (Live Team Competition): Human Activity Tracking Dataset for Classifying Quality of Bicep Curls

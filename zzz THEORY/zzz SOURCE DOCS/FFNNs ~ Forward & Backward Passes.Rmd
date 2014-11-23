@@ -2,20 +2,18 @@
 title: 'Forward-Feeding Neural Networks (FFNNs): Forward & Backward Passes'
 output: pdf_document
 fontsize: 12
-geometry: margin=1.5cm
+geometry: margin=0.9cm
 ---
 
 
 
 *STUFF TO KNOW BY HEART - EVEN WHEN DRUNK!*
 
-*1. FFNNs are **supervised** learning models*
+*1. An FFNN consists of **layers** of **transformation functions** and **weights***
 
-*2. An FFNN consists of **layers** of **transformation functions** and **weights***
+*2. FFNNs' **forward pass** models **hypothesized output***
 
-*3. FFNNs' **forward pass** models **hypothesized output***
-
-*4. FFNNs' **backward pass** computes **partial derivatives** of cost function with respect to weight layers, for use in mathematical optimization*
+*3. FFNNs' **backward pass** computes **partial derivatives** of cost function with respect to weight layers, for use in mathematical optimization*
 
 
 

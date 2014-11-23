@@ -1,8 +1,8 @@
 ---
 title: 'Neural Networks for Pattern Recognition: Homework 01'
-geometry: margin=1.5cm
 output: pdf_document
 fontsize: 12pt
+geometry: margin=0.9cm
 ---
 
 

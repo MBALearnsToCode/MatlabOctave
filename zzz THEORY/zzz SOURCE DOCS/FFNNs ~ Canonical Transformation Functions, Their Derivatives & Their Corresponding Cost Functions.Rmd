@@ -3,7 +3,7 @@ title: 'Forward-Feeding Neural Networks (FFNNs): Canonical Transformation Functi
   Their Derivatives & Their Corresponding Cost Functions'
 output: pdf_document
 fontsize: 12
-geometry: margin=1.5cm
+geometry: margin=0.9cm
 ---
 
 

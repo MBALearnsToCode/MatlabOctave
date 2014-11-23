@@ -21,7 +21,7 @@ function f = predictPokerHands(pokerHands_texts = '', ...
    endif   
    pokerHands = convertTexts_toPokerHands(pokerHands_texts);
    pokerHands_labels = predict(ffNN, pokerHands);
-   if iscell(pokerHands)
+   if iscell(pokerHands_texts)
       for i = 1 : length(pokerHands_labels)
          f{i} = const_pokerHandLabels(){pokerHands_labels(i)};
       endfor

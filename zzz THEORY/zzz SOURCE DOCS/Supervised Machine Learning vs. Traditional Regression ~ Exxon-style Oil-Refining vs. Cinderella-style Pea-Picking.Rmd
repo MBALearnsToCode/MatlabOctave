@@ -3,7 +3,7 @@ title: 'Supervised Machine Learning vs. Traditional Regression: Exxon-style Oil-
   vs. Cinderella-style Pea-Picking'
 output: pdf_document
 fontsize: 12
-geometry: margin=1.5cm
+geometry: margin=0.9cm
 ---
 
 

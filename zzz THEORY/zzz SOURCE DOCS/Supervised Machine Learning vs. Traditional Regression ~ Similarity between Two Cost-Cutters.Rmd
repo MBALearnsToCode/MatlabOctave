@@ -3,7 +3,7 @@ title: 'Supervised Machine Learning vs. Traditional Regression: Similarity betwe
   Two Cost-Cutters'
 output: pdf_document
 fontsize: 12pt
-geometry: margin=1.5cm
+geometry: margin=0.9cm
 ---
 
 
