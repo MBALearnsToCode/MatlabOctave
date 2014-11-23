@@ -1,6 +1,6 @@
 function ffNN = ffNN_bicepCurls...
    (loadFileName = '', saveFileName = '', ...
-   numsHid = 300, numEpochs = 30, ...
+   numsHid = 100, numEpochs = 30, ...
    numAdjustments_perBatch = 3, weightPenaltyTerm = 0);
       
    % load data
@@ -11,26 +11,9 @@ function ffNN = ffNN_bicepCurls...
    r = load('bicepCurlQuality_randperm.mat').randperm_39242;
    X_train = X(r(20001 : 35000), :);
    y_train = y(r(20001 : 35000));
-   sum(y_train == 1)
-   sum(y_train == 2)
-   sum(y_train == 3)
-   sum(y_train == 4)
-   sum(y_train == 5)
    X_valid = X(r(35001 : 39242), :);
    y_valid = y(r(35001 : 39242));
-   sum(y_valid == 1)
-   sum(y_valid == 2)
-   sum(y_valid == 3)
-   sum(y_valid == 4)
-   sum(y_valid == 5)
-   X_test = X(r(1 : 20000), :);
-   y_test = y(r(1 : 20000));
-   sum(y_test == 1)
-   sum(y_test == 2)
-   sum(y_test == 3)
-   sum(y_test == 4)
-   sum(y_test == 5)
-   fprintf(' done!\n');   
+   fprintf('\n   done!\n');   
    
    if strcmp(loadFileName, '')
       % create Forward-Feeding Neural Network (FFNN):
