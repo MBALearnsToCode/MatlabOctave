@@ -6,4 +6,4 @@ function f = linearKernMat_rowMat(rowMat1, rowMat2 = [])
    
    f = rowMat1 * rowMat2';
    
-end
+endfunction
