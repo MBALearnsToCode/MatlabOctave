@@ -5,7 +5,7 @@
 % 4. Set working directory
 % 5. Add folders to the search path
 
-addpath(genpath(pwd()));
+# addpath(genpath(pwd()));
 warningSettings;
 PS1('CMD>>>   ');
 more off;

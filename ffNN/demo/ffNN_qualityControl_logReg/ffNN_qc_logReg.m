@@ -6,7 +6,7 @@
 
 function ffNN = ffNN_qc_logReg....
    (weightPenaltyTerm = 0, bestStop = false, ...
-   numIters_perEpoch = 1, numEpochs = 100, polyDeg = 9);
+   numIters_perEpoch = 1, numEpochs = 100, polyDeg = 9)
 
    % Close existing plots
    close all;

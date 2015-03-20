@@ -1,5 +1,5 @@
 function t = testFun(first, second)
    
-   second
+   disp(second)
    
 endfunction
